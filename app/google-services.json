@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "964128475551",
+    "firebase_url": "https://xavfsiz-bolajon-default-rtdb.firebaseio.com",
+    "project_id": "xavfsiz-bolajon",
+    "storage_bucket": "xavfsiz-bolajon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964128475551:android:a5b45e787bd2d0f60215aa",
+        "android_client_info": {
+          "package_name": "com.example.xavfsizbolajon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrov4IH-NZFE2Z0nR9HEleq-VPV71RusM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
