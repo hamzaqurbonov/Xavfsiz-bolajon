@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment  {
 
                     CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
                     youTubePlayer.addListener(customPlayerUiController);
-
+                    setPlayNextVideoButtonClickListener(youTubePlayer);
                     YouTubePlayerUtils.loadOrCueVideo(
                             youTubePlayer, getLifecycle(),
                             HomeViewModel.getNextVideoId(), 0f
@@ -139,19 +139,32 @@ public class HomeFragment extends Fragment  {
 
 
 
-//        youTubePlayerView.addYouTubePlayerListener( new AbstractYouTubePlayerListener() {
-//            @Override
-//            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-//
-//
-//                YouTubePlayerUtils.loadOrCueVideo(
-//                        youTubePlayer, getLifecycle(),
-//                        "X3tr5ax78V4", 0f
-//                );
-//            }
-//        });
+    private void setPlayNextVideoButtonClickListener(final YouTubePlayer youTubePlayer) {
+        Button playPreviousVideoButton = getView().findViewById(R.id.previous_video_button);
+        Button playNextVideoButton = getView().findViewById(R.id.next_video_button);
 
-//    }
+        playPreviousVideoButton.setOnClickListener(view ->
+
+                YouTubePlayerUtils.loadOrCueVideo(
+                        youTubePlayer,
+                        getLifecycle(),
+                        HomeViewModel.getPreviousVideoId(),
+                        0f
+                )
+
+        );
+        playNextVideoButton.setOnClickListener(view ->
+
+                YouTubePlayerUtils.loadOrCueVideo(
+                        youTubePlayer,
+                        getLifecycle(),
+                        HomeViewModel.getNextVideoId(),
+                        0f
+                )
+
+        );
+
+    }
 
 
 
