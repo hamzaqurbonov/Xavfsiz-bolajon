@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends HomeFragment {
 
     public static ArrayList<String> previousArrayList = new ArrayList<>();
     private static final Random random = new Random();

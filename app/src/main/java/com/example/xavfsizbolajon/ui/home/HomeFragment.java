@@ -36,10 +36,10 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment  {
 
-
+//    HomeFragment homeFragment = new HomeFragment();
     private FragmentHomeBinding binding;
     YouTubePlayerView youTubePlayerView;
-    private Button playNextVideoButton;
+    Button playNextVideoButton;
 
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
