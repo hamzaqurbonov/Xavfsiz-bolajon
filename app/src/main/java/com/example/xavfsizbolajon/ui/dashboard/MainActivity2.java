@@ -26,19 +26,12 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);
 
-//        nameTextView = findViewById(R.id.nameTextView);
-//
-///
-//
-//
-//        nameTextView.setText(getIntent().getExtras().getString("Kurbanov"));
+        nameTextView = findViewById(R.id.nameTextView);
 
+        nameTextView.setText(getIntent().getExtras().getString("Kurbanov"));
 
-
-
-
-//        youTubePlayerView = findViewById(R.id.youtube_player_view2);
-//        initYouTubePlayerView();
+        youTubePlayerView = findViewById(R.id.youtube_player_view2);
+        initYouTubePlayerView();
     }
 
 

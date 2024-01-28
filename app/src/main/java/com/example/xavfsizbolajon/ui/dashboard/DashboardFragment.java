@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(getContext(), MainActivity2.class);
-//                intent.putExtra( "Kurbanov",modellist .get(position).getLastName());
+                intent.putExtra( "Kurbanov",modellist .get(position).getLastName());
                 startActivity(intent);
             }
         };
