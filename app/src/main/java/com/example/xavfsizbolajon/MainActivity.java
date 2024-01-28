@@ -52,49 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-
-//        myRef.setValue("Hello, World!");
-
-
-
-
-//        final ArrayAdapter<String> myArrayAdaptrer = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,nextArrayList);
-//
-//
-//        myRef = FirebaseDatabase.getInstance().getReference();
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//                String value =  snapshot.getValue(String.class);
-//                nextArrayList.add(value);
-//                myArrayAdaptrer.notifyDataSetChanged();
-//
-//                Log.d("demo21", String.valueOf(nextArrayList));
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                myArrayAdaptrer.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
     }
 
