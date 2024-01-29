@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,13 +44,23 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Model member = modellist.get(position);
 
-        if(holder instanceof CustomViewHolder){
-            LinearLayout lay_click = ((CustomViewHolder) holder).lay_click;
-            TextView fist_name = ((CustomViewHolder) holder).first_name;
-            TextView last_name = ((CustomViewHolder) holder).last_name;
+        if(holder instanceof CustomViewHolder) {
 
-            fist_name.setText(member.getFirstName());
-            last_name.setText(member.getLastName());
+            if (position % 3 == 0) {
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_dashboard_black_24dp);
+            } else if (position % 4 == 0) {
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_home_black_24dp);
+            } else {
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_notifications_black_24dp);
+            }
+        }
+
+//            LinearLayout lay_click = ((CustomViewHolder) holder).lay_click;
+//            TextView fist_name = ((CustomViewHolder) holder).first_name;
+//            TextView last_name = ((CustomViewHolder) holder).last_name;
+//
+//            fist_name.setText(member.getFirstName());
+//            last_name.setText(member.getLastName());
 
 //            lay_click.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -72,7 +83,7 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                    });
 //                }
 //            });
-        }
+
 
     }
 
@@ -85,13 +96,15 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public View view;
         private LinearLayout lay_click;
         YouTubePlayerView youTubePlayerView;
+        ImageView itemImage;
         public TextView first_name, last_name, nameTxt;
         public CustomViewHolder(View v) {
             super(v);
             view = v;
-            lay_click = view.findViewById(R.id.lay_click    );
-            first_name = view.findViewById(R.id.first_name);
-            last_name = view.findViewById(R.id.last_name);
+            itemImage = view.findViewById(R.id.item_image);
+//            lay_click = view.findViewById(R.id.lay_click    );
+//            first_name = view.findViewById(R.id.first_name);
+//            last_name = view.findViewById(R.id.last_name);
             youTubePlayerView = view.findViewById(R.id.youtube_player_view);
 //            nameTxt = view.findViewById(R.id.nameTextView);
             view.setOnClickListener(this);
