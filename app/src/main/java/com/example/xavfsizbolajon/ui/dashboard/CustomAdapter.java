@@ -47,11 +47,11 @@ public class CustomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if(holder instanceof CustomViewHolder) {
 
             if (position % 3 == 0) {
-                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_dashboard_black_24dp);
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.image18);
             } else if (position % 4 == 0) {
-                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_home_black_24dp);
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.image21);
             } else {
-                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.ic_notifications_black_24dp);
+                ((CustomViewHolder) holder).itemImage.setImageResource(R.drawable.image19);
             }
         }
 

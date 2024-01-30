@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment  {
                 nextArrayList.add(value);
                 myArrayAdaptrer.notifyDataSetChanged();
 
-                Log.d("demo21", String.valueOf(nextArrayList));
+//                Log.d("demo21", String.valueOf(nextArrayList));
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -126,7 +126,7 @@ public class HomeFragment extends Fragment  {
                             youTubePlayer, getLifecycle(),
                             HomeViewModel.getNextVideoId(), 0f
                     );
-                    Log.d("demo21", String.valueOf(nextArrayList));
+//                    Log.d("demo21", String.valueOf(nextArrayList));
                 }
             };
             // disable web ui
