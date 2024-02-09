@@ -55,4 +55,9 @@ dependencies {
 
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 
+// FirestoreRecyclerOptions
+    implementation ("com.google.firebase:firebase-firestore:17.0.4")
+    implementation ("com.google.firebase:firebase-core:21.1.1")
+    implementation ("com.firebaseui:firebase-ui-firestore:7.1.1")
+
 }
