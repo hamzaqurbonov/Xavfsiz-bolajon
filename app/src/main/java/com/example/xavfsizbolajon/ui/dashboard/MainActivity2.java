@@ -28,7 +28,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         nameTextView = findViewById(R.id.nameTextView);
 
-        nameTextView.setText(getIntent().getExtras().getString("title"));
+        nameTextView.setText(getIntent().getExtras().getString("idUrl"));
 
         youTubePlayerView = findViewById(R.id.youtube_player_view2);
         initYouTubePlayerView();
@@ -52,7 +52,7 @@ public class MainActivity2 extends AppCompatActivity {
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer, getLifecycle(),
-                        setText(getIntent().getExtras().getString("title")),
+                        setText(getIntent().getExtras().getString("idUrl")),
                         0f
                 );
 //                Log.d("demo17", getSetText().toString());

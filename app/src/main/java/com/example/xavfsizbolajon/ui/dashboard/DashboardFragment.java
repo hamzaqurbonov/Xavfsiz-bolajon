@@ -38,11 +38,10 @@ import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
-    private NoteAdapter adapter;
+    private LongAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference noteDB = db.document("main/short");
-    private CollectionReference notebookRef = db.collection("Notebook");
-    private Context context;
+    private CollectionReference hadRef = db.collection("Notebook");
     private RecyclerView recyclerView;
     private FragmentDashboardBinding binding;
 
@@ -58,7 +57,6 @@ public class DashboardFragment extends Fragment {
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
-//        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         setUpRecyclerView();
 //        initViews();
 //        List<Model> modellist = prepareMemerList();
@@ -69,11 +67,11 @@ public class DashboardFragment extends Fragment {
 
     private void setUpRecyclerView() {
 
-        Query query = notebookRef.orderBy("title", Query.Direction.DESCENDING);
+        Query query = hadRef.orderBy("idUrl", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<LongModel> options = new FirestoreRecyclerOptions.Builder<LongModel>().setQuery(query, LongModel.class).build();
 
-        adapter = new NoteAdapter(options);
+        adapter = new LongAdapter(options);
 
 //        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -93,7 +91,7 @@ public class DashboardFragment extends Fragment {
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setItemClickListner(new NoteAdapter.OnItemClickListner() {
+        adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 LongModel noteMode = documentSnapshot.toObject(LongModel.class);
@@ -102,18 +100,14 @@ public class DashboardFragment extends Fragment {
 //                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
 
                 String chapterName = adapter.getItem(position).getTitle();
-
                 Intent intent = new Intent(getContext(), MainActivity2.class);
-
-                intent.putExtra("title", chapterName);
-
+                intent.putExtra("idUrl", chapterName);
                 startActivity(intent);
 
             }
         });
 
     }
-
 
     @Override
     public void onStart() {
