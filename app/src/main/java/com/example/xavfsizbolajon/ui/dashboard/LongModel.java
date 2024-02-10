@@ -4,6 +4,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class LongModel {
     private String title;
+    private String idUrl;
 
     public LongModel() {
         this.title = title;
@@ -11,5 +12,9 @@ public class LongModel {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getIdUrl() {
+        return idUrl;
     }
 }

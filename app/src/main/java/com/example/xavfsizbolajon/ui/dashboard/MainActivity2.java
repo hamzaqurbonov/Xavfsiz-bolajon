@@ -28,7 +28,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         nameTextView = findViewById(R.id.nameTextView);
 
-        nameTextView.setText(getIntent().getExtras().getString("idUrl"));
+        nameTextView.setText(getIntent().getExtras().getString("title"));
 
         youTubePlayerView = findViewById(R.id.youtube_player_view2);
         initYouTubePlayerView();

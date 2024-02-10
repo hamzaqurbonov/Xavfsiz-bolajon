@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -75,21 +76,22 @@ public class DashboardFragment extends Fragment {
 
 //        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3  ));
         recyclerView.setAdapter(adapter);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
-            }
-        }).attachToRecyclerView(recyclerView);
+//      ------------  Delet Udalit---------------
+//        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+//                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//            @Override
+//            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+////                adapter.deleteItem(viewHolder.getAdapterPosition());
+//            }
+//        }).attachToRecyclerView(recyclerView);
 
         adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
             @Override
@@ -100,8 +102,10 @@ public class DashboardFragment extends Fragment {
 //                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
 
                 String chapterName = adapter.getItem(position).getTitle();
+                String getIdUrl = adapter.getItem(position).getIdUrl();
                 Intent intent = new Intent(getContext(), MainActivity2.class);
-                intent.putExtra("idUrl", chapterName);
+                intent.putExtra("title", chapterName);
+                intent.putExtra("idUrl", getIdUrl);
                 startActivity(intent);
 
             }

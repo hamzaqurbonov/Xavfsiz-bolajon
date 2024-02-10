@@ -42,9 +42,9 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
         holder.videoName.setText(String.valueOf(noteModel.getTitle()));
     }
 
-    public void  deleteItem(int position) {
-        getSnapshots().getSnapshot(position).getReference().delete();
-    }
+//    public void  deleteItem(int position) {
+//        getSnapshots().getSnapshot(position).getReference().delete();
+//    }
 
     class LongHolder extends RecyclerView.ViewHolder {
         TextView Url, videoName;
