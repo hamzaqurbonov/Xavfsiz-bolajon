@@ -48,8 +48,6 @@ public class HomeFragment extends Fragment  {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        HomeViewModel homeViewModel =
-//                new ViewModelProvider(this).get(HomeViewModel.class);
 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -124,8 +122,12 @@ public class HomeFragment extends Fragment  {
                     setPlayNextVideoButtonClickListener(youTubePlayer);
                     YouTubePlayerUtils.loadOrCueVideo(
                             youTubePlayer, getLifecycle(),
-                            HomeViewModel.getNextVideoId(), 0f
+                            "d73qK3n5Xok", 0f
                     );
+
+//                    HomeViewModel.getNextVideoId()
+
+
 //                    Log.d("demo21", String.valueOf(nextArrayList));
                 }
             };
@@ -165,6 +167,10 @@ public class HomeFragment extends Fragment  {
 
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
 }
