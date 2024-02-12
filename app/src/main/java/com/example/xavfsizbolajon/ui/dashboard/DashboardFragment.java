@@ -103,9 +103,11 @@ public class DashboardFragment extends Fragment {
 
                 String chapterName = adapter.getItem(position).getTitle();
                 String getIdUrl = adapter.getItem(position).getIdUrl();
+//                String getImageUrl = adapter.getItem(position).getImageUrl();
                 Intent intent = new Intent(getContext(), MainActivity2.class);
                 intent.putExtra("title", chapterName);
                 intent.putExtra("idUrl", getIdUrl);
+//                intent.putExtra("imageUrl", getImageUrl);
                 startActivity(intent);
 
             }

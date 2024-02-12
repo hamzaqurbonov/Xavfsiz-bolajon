@@ -1,12 +1,13 @@
 package com.example.xavfsizbolajon.ui.dashboard;
 
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-
 public class LongModel {
     private String title;
     private String idUrl;
+    private String imageUrl;
 
     public LongModel() {
+        this.idUrl = idUrl;
+        this.imageUrl = imageUrl;
         this.title = title;
     }
 
@@ -16,5 +17,9 @@ public class LongModel {
 
     public String getIdUrl() {
         return idUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
