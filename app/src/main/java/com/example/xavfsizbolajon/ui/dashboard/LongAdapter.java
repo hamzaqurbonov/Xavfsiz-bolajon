@@ -48,7 +48,7 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
         Glide.with(holder.itemView.getContext()) // get context from view
                 .load(noteModel.getImageUrl())
                 .centerCrop()
-                .placeholder(R.drawable.image11)
+                .placeholder(R.drawable.image18)
                 .into(holder.imgChildItem);
     }
 

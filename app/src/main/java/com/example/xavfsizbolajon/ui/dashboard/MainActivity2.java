@@ -1,12 +1,14 @@
 package com.example.xavfsizbolajon.ui.dashboard;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.xavfsizbolajon.R;
+import com.example.xavfsizbolajon.ui.home.CustomPlayerUiController;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -39,15 +41,15 @@ public class MainActivity2 extends AppCompatActivity {
 
     public void initYouTubePlayerView() {
         getLifecycle().addObserver(youTubePlayerView);
-//        View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
+        View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.long_panel);
 
         YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
 
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
-//                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
-//                youTubePlayer.addListener(customPlayerUiController);
+                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(MainActivity2.this, customPlayerUi, youTubePlayer, youTubePlayerView);
+                youTubePlayer.addListener(customPlayerUiController);
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer, getLifecycle(),
