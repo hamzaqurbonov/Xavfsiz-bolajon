@@ -31,4 +31,4 @@ public class HomeViewModel extends HomeFragment {
 //        Log.d("demo21", String.valueOf(nextArrayList));
         return clon;
     }
-            }
+   }
