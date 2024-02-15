@@ -24,9 +24,10 @@ import java.util.List;
 public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter.LongHolder> {
     private final FirestoreRecyclerOptions<LongModel> options;
     private OnItemClickListner listner;
+
     public LongAdapter(FirestoreRecyclerOptions<LongModel> options) {
         super(options);
-        this.options=options;
+        this.options = options;
     }
 
     @NonNull
@@ -40,7 +41,7 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
     @Override
     protected void onBindViewHolder(@NonNull LongHolder holder, int position, @NonNull LongModel noteModel) {
 
-            holder.Url.setText(noteModel.getTitle());
+        holder.Url.setText(noteModel.getTitle());
         holder.videoName.setText(String.valueOf(noteModel.getTitle()));
 //        holder.imgChildItem.setImage(noteModel.getImageUrl());
 
@@ -59,6 +60,7 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
     class LongHolder extends RecyclerView.ViewHolder {
         TextView Url, videoName;
         ImageView imgChildItem;
+
         public LongHolder(View itemView) {
             super(itemView);
             videoName = itemView.findViewById(R.id.first_name);
@@ -69,8 +71,8 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION && listner != null) {
-                        listner.onItemClick(getSnapshots().getSnapshot(position), position );
+                    if (position != RecyclerView.NO_POSITION && listner != null) {
+                        listner.onItemClick(getSnapshots().getSnapshot(position), position);
                     }
                 }
             });
@@ -82,7 +84,7 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
-    public void setItemClickListner(OnItemClickListner listner){
+    public void setItemClickListner(OnItemClickListner listner) {
         this.listner = listner;
     }
 }

@@ -36,15 +36,13 @@ public class MainActivity2 extends AppCompatActivity {
     private FragmentDashboardBinding binding;
 
 
-
     YouTubePlayerView youTubePlayerView;
     TextView nameTextView;
     String user;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity2);
 
@@ -59,9 +57,6 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
 
-
-
-
     private void Activity2RecyclerView() {
 
         Query query = hadRef.orderBy("idUrl", Query.Direction.DESCENDING);
@@ -72,7 +67,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 //        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3  ));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(adapter);
 
 //        adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
@@ -96,7 +91,6 @@ public class MainActivity2 extends AppCompatActivity {
 //        });
 
 
-
     }
 
 
@@ -109,27 +103,6 @@ public class MainActivity2 extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     public void initYouTubePlayerView() {
