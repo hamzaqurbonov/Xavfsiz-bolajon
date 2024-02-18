@@ -42,7 +42,7 @@ public class DashboardFragment extends Fragment {
     private LongAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference noteDB = db.document("main/short");
-    private CollectionReference hadRef = db.collection("Notebook");
+            private CollectionReference hadRef = db.collection("Notebook");
     private RecyclerView recyclerView;
     private FragmentDashboardBinding binding;
 

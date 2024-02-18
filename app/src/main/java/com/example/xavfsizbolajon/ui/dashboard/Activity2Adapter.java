@@ -33,7 +33,7 @@ public class Activity2Adapter extends FirestoreRecyclerAdapter<Activity2Model, A
     @Override
     protected void onBindViewHolder(@NonNull Activity2Adapter.Activity2Holder holder, int position, @NonNull Activity2Model model) {
         holder.Url.setText(model.getTitle());
-        holder.videoName.setText(String.valueOf(model.getTitle()));
+        holder.videoName.setText(String.valueOf(model.getTags().get("tag1")));
 
 
         Glide.with(holder.itemView.getContext()) // get context from view
