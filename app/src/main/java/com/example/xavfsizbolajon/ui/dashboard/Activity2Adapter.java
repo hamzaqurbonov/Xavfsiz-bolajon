@@ -1,5 +1,6 @@
 package com.example.xavfsizbolajon.ui.dashboard;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,44 +16,66 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-public class Activity2Adapter extends FirestoreRecyclerAdapter<Activity2Model, Activity2Adapter.Activity2Holder> {
-    private final FirestoreRecyclerOptions<Activity2Model> options2;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Activity2Adapter(@NonNull FirestoreRecyclerOptions<Activity2Model> options2) {
-        super(options2);
-        this.options2 = options2;
+public class Activity2Adapter extends RecyclerView.Adapter< RecyclerView.ViewHolder> {
+
+
+//    private static final String[] VideoIds = {"pcbGX4JcILA", "asdsd"};
+
+    MainActivity2 activity2;
+    List<String> activityllist ;
+    List<String> modellist2;
+    public ArrayList<String> list2;
+
+
+    public Activity2Adapter(MainActivity2 activity2, List<String> activityllist) {
+        this.activityllist = activityllist;
+        this.activity2 = activity2;
+//        Log.d("demo16","4 "+ activity2.activityllist.toString());
     }
 
     @NonNull
     @Override
-    public Activity2Adapter.Activity2Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dash, parent, false);
-        return new Activity2Holder(v);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dash, parent, false);
+
+
+        return new Activity2Adapter.Activity2AdapterViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Activity2Adapter.Activity2Holder holder, int position, @NonNull Activity2Model model) {
-        holder.Url.setText(model.getTitle());
-        holder.videoName.setText(String.valueOf(model.getTags().get("tag1")));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
 
-        Glide.with(holder.itemView.getContext()) // get context from view
-                .load(model.getImageUrl()).centerCrop().placeholder(R.drawable.image18).into(holder.imgChildItem);
+        TextView Url= ((Activity2AdapterViewHolder) holder).last_name;
+        Url.setText(activity2.activityllist.get(position));
 
     }
 
+    @Override
+    public int getItemCount() {
+        int dd =  activity2.activityllist.size();
+//        Log.d("demo16","5 "+ dd);
+//           String[] dd = new String[]{activity2.activityllist.toString()};
 
-    public class Activity2Holder extends RecyclerView.ViewHolder {
+        return dd;
+    }
 
-        TextView Url, videoName;
-        ImageView imgChildItem;
+    public class Activity2AdapterViewHolder extends RecyclerView.ViewHolder {
+        View view;
+        TextView Url, last_name;
 
-        public Activity2Holder(@NonNull View itemView) {
-            super(itemView);
-            videoName = itemView.findViewById(R.id.first_name);
-            Url = itemView.findViewById(R.id.first_name);
-            imgChildItem = itemView.findViewById(R.id.img_child_item);
+        public Activity2AdapterViewHolder(View v) {
+            super(v);
+            view = v;
+
+            Url = view.findViewById(R.id.first_name);
+            last_name = view.findViewById(R.id.first_name);
 
         }
+
+
     }
 }

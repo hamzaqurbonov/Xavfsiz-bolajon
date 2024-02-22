@@ -14,11 +14,16 @@ import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentDashboardBinding;
 import com.example.xavfsizbolajon.ui.home.CustomPlayerUiController;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -26,19 +31,19 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFram
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity2 extends AppCompatActivity {
 
     private Activity2Adapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference noteDB = db.document("main/short");
-    private CollectionReference hadRef = db.collection("Notebook");
+    private CollectionReference hadRef = db.collection("Notebook2");
     private RecyclerView recyclerView;
-    private FragmentDashboardBinding binding;
-
-
     YouTubePlayerView youTubePlayerView;
     TextView nameTextView;
-    String user;
+    static List<String> activityllist = new ArrayList<>();
 
 
     @Override
@@ -47,63 +52,45 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity2);
 
         nameTextView = findViewById(R.id.nameTextView);
-
-        nameTextView.setText(getIntent().getExtras().getString("title"));
         youTubePlayerView = findViewById(R.id.youtube_player_view2);
         initYouTubePlayerView();
 
+
+        String model = getIntent().getExtras().getString("id");
+        db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                        List<String> list = (ArrayList<String>) document.get("tagm");
+                        activityllist = (List<String>) document.get("tagm");
+
+
+                    }
+                }
+            }
+
+        });
+        nameTextView.setText(model);
+
+        initViews();
+        refreshAdapter(activityllist);
+
+    }
+
+    private void initViews() {
         recyclerView = findViewById(R.id.activity2RecyclerView);
-        Activity2RecyclerView();
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity2.this, 3));
+
     }
 
 
-    private void Activity2RecyclerView() {
+    private void refreshAdapter(List<String> activityllist) {
 
-        Query query = hadRef.orderBy("idUrl", Query.Direction.DESCENDING);
-
-        FirestoreRecyclerOptions<Activity2Model> options2 = new FirestoreRecyclerOptions.Builder<Activity2Model>().setQuery(query, Activity2Model.class).build();
-
-        adapter = new Activity2Adapter(options2);
-
-//        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        Activity2Adapter adapter = new Activity2Adapter(MainActivity2.this, activityllist);
         recyclerView.setAdapter(adapter);
-
-//        adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
-//            @Override
-//            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-//                LongModel noteMode = documentSnapshot.toObject(LongModel.class);
-//                String id = documentSnapshot.getId();
-//                String path = documentSnapshot.getReference().getPath();
-//                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
-
-//                String chapterName = adapter.getItem(position).getTitle();
-//                String getIdUrl = adapter.getItem(position).getIdUrl();
-//
-//                Intent intent = new Intent(MainActivity2.this, DashboardFragment.class);
-//                intent.putExtra("title", chapterName);
-//                intent.putExtra("idUrl", getIdUrl);
-//
-//                startActivity(intent);
-
-//            }
-//        });
-
-
     }
-
-
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
-
 
     public void initYouTubePlayerView() {
         getLifecycle().addObserver(youTubePlayerView);

@@ -107,7 +107,7 @@ public class DashboardFragment extends Fragment {
                 Intent intent = new Intent(getContext(), MainActivity2.class);
                 intent.putExtra("title", chapterName);
                 intent.putExtra("idUrl", getIdUrl);
-//                intent.putExtra("imageUrl", getImageUrl);
+                intent.putExtra("id", id);
                 startActivity(intent);
 
             }
