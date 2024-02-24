@@ -1,0 +1,104 @@
+package com.example.xavfsizbolajon.ui.dashboard.longChild;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.xavfsizbolajon.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class LongChildOne extends AppCompatActivity {
+
+    private OneChildAdapter.RecyclerViewClickListner listner;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RecyclerView recyclerView;
+    TextView nameText;
+    List<String> activityllist = new ArrayList<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_long_child_one);
+        String model = getIntent().getExtras().getString("id");
+
+        db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                        List<String> list = (ArrayList<String>) document.get("tagm");
+                        activityllist = (List<String>) document.get("tagm");
+
+                        initViews();
+                        setOnClickListner();
+                        refreshAdapter(activityllist);
+//
+//                        Map<String, Object> map = document.getData();
+//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                            if (entry.getKey().equals("idUrl")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                            if (entry.getKey().equals("tagm")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                        }
+                    }
+                }
+            }
+
+        });
+
+//        nameText.setText(model);
+
+//        initViews();
+//        setOnClickListner();
+//        refreshAdapter(activityllist);
+    }
+
+
+    private void initViews() {
+        recyclerView = findViewById(R.id.one_long_recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(LongChildOne.this, 3));
+//        Log.d("demo22", activityllist.toString());
+    }
+
+
+    private void refreshAdapter(List<String> activityllist) {
+
+        OneChildAdapter adapter = new OneChildAdapter(this, activityllist, listner);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+    private void setOnClickListner() {
+
+        listner = new OneChildAdapter.RecyclerViewClickListner() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent intent = new Intent(LongChildOne.this, LongChildTwo.class);
+//                Toast.makeText(MainActivity2.this,  "MainActivity2", Toast.LENGTH_SHORT).show();
+                intent.putExtra("id", getIntent().getExtras().getString("id"));
+                startActivity(intent);
+            }
+
+        };
+
+    }
+
+
+}

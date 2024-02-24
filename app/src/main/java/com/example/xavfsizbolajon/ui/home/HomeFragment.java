@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment  {
                     setPlayNextVideoButtonClickListener(youTubePlayer);
                     YouTubePlayerUtils.loadOrCueVideo(
                             youTubePlayer, getLifecycle(),
-                            "d73qK3n5Xok", 0f
+                            "", 0f
                     );
 
 //                    HomeViewModel.getNextVideoId()

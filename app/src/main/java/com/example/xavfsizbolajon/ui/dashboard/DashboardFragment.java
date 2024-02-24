@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentDashboardBinding;
+import com.example.xavfsizbolajon.ui.dashboard.longChild.LongChildOne;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -104,7 +105,7 @@ public class DashboardFragment extends Fragment {
                 String chapterName = adapter.getItem(position).getTitle();
                 String getIdUrl = adapter.getItem(position).getIdUrl();
 //                String getImageUrl = adapter.getItem(position).getImageUrl();
-                Intent intent = new Intent(getContext(), MainActivity2.class);
+                Intent intent = new Intent(getContext(), LongChildOne.class);
                 intent.putExtra("title", chapterName);
                 intent.putExtra("idUrl", getIdUrl);
                 intent.putExtra("id", id);
