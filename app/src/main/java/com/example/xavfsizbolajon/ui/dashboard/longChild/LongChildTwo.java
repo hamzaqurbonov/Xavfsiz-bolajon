@@ -72,7 +72,7 @@ public class LongChildTwo extends AppCompatActivity {
 
     private void initViews() {
         recyclerView = findViewById(R.id.two_long_recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(LongChildTwo.this, 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(LongChildTwo.this, 3));
     }
 
 
@@ -90,6 +90,7 @@ public class LongChildTwo extends AppCompatActivity {
             public void onClick(View v, int position) {
                 Intent intent = new Intent(LongChildTwo.this, LongChildOne.class);
 //                Toast.makeText(MainActivity2.this,  "MainActivity2", Toast.LENGTH_SHORT).show();
+                intent.putExtra( "tag",activityllist.get(position));
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
                 startActivity(intent);
             }
