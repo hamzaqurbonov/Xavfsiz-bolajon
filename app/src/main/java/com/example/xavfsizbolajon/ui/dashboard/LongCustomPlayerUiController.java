@@ -18,7 +18,7 @@ public class LongCustomPlayerUiController extends AbstractYouTubePlayerListener 
     private final YouTubePlayer youTubePlayer;
     private View panel;
 
-    LongCustomPlayerUiController(Context context, View customPlayerUi, YouTubePlayer youTubePlayer, YouTubePlayerView youTubePlayerView) {
+    public LongCustomPlayerUiController(Context context, View customPlayerUi, YouTubePlayer youTubePlayer, YouTubePlayerView youTubePlayerView) {
         this.context = context;
         this.youTubePlayer = youTubePlayer;
         initViews(customPlayerUi);

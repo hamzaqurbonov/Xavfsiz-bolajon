@@ -77,13 +77,11 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
                 }
             });
         }
-
     }
 
     public interface OnItemClickListner {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
-
     public void setItemClickListner(OnItemClickListner listner) {
         this.listner = listner;
     }
