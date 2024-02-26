@@ -1,5 +1,6 @@
 package com.example.xavfsizbolajon.ui.home;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,11 +49,14 @@ public class HomeFragment extends Fragment  {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+//        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-        youTubePlayerView = view.findViewById(R.id.youtube_player_view1);
+
+        youTubePlayerView = root.findViewById(R.id.youtube_player_view1);
 //        playNextVideoButton = view.findViewById(R.id.next_video_button);
         initYouTubePlayerView();
 
@@ -90,11 +94,15 @@ public class HomeFragment extends Fragment  {
             }
         });
 
+        return root;
 
-        return view;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
@@ -122,7 +130,7 @@ public class HomeFragment extends Fragment  {
                     setPlayNextVideoButtonClickListener(youTubePlayer);
                     YouTubePlayerUtils.loadOrCueVideo(
                             youTubePlayer, getLifecycle(),
-                            "", 0f
+                            "ClVcPyEfcF0", 0f
                     );
 
 //                    HomeViewModel.getNextVideoId()
@@ -135,10 +143,6 @@ public class HomeFragment extends Fragment  {
             IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
             youTubePlayerView.initialize(listener, options);
         }
-
-
-
-
 
     private void setPlayNextVideoButtonClickListener(final YouTubePlayer youTubePlayer) {
         Button playPreviousVideoButton = getView().findViewById(R.id.previous_video_button);
@@ -167,10 +171,5 @@ public class HomeFragment extends Fragment  {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
 
 }

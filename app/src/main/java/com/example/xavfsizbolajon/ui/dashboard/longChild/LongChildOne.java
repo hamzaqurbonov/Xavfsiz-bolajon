@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -84,6 +85,17 @@ public class LongChildOne extends AppCompatActivity {
         initYouTubePlayerView();
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            youTubePlayerView.matchParent();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            youTubePlayerView.wrapContent();
+        }
+    }
 
     private void initViews() {
         recyclerView = findViewById(R.id.one_long_recyclerView);
@@ -113,6 +125,7 @@ public class LongChildOne extends AppCompatActivity {
 
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
                 startActivity(intent);
+                finish();
             }
 
         };

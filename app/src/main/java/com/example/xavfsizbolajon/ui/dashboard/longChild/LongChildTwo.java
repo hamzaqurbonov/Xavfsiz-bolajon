@@ -93,6 +93,7 @@ public class LongChildTwo extends AppCompatActivity {
                 intent.putExtra( "tag",activityllist.get(position));
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
                 startActivity(intent);
+                finish();
             }
 
         };
