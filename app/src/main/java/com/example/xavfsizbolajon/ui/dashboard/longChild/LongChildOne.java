@@ -85,17 +85,17 @@ public class LongChildOne extends AppCompatActivity {
         initYouTubePlayerViewOne();
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Checks the orientation of the screen
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            youTubePlayerView.matchParent();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            youTubePlayerView.wrapContent();
-        }
-    }
+//    @Override
+//    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//        // Checks the orientation of the screen
+//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            youTubePlayerView.matchParent();
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            youTubePlayerView.wrapContent();
+//        }
+//    }
 
     private void initViews() {
         recyclerView = findViewById(R.id.one_long_recyclerView);
