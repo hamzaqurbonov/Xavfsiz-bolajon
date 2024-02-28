@@ -43,11 +43,13 @@ public class DashboardFragment extends Fragment {
     private LongAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference noteDB = db.document("main/short");
-            private CollectionReference hadRef = db.collection("Notebook");
+    private CollectionReference hadRef = db.collection("Notebook");
     private RecyclerView recyclerView;
     private FragmentDashboardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
