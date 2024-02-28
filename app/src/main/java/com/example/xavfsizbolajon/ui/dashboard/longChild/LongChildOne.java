@@ -39,7 +39,7 @@ public class LongChildOne extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView nameText;
     List<String> activityllist = new ArrayList<>();
-    YouTubePlayerView youTubePlayerView;
+    YouTubePlayerView youTubePlayerViewOne;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +80,8 @@ public class LongChildOne extends AppCompatActivity {
 
 //        nameText.setText(model);
 
-        youTubePlayerView = findViewById(R.id.youtube_player_view2);
-        initYouTubePlayerView();
+        youTubePlayerViewOne = findViewById(R.id.youtube_player_view_one);
+        initYouTubePlayerViewOne();
     }
 
 
@@ -105,7 +105,7 @@ public class LongChildOne extends AppCompatActivity {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent(LongChildOne.this, LongChildTwo.class);
-
+//                cueVideoInitYouTubePlayer();
 
                 Toast.makeText(LongChildOne.this, "ID " + activityllist.get(position), Toast.LENGTH_SHORT).show();
                 Log.d("demo1", activityllist.get(position));
@@ -113,44 +113,25 @@ public class LongChildOne extends AppCompatActivity {
 
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
                 startActivity(intent);
+                finish();
             }
 
         };
-
-//        adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
-//            @Override
-//            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-//                LongModel noteMode = documentSnapshot.toObject(LongModel.class);
-//                String id = documentSnapshot.getId();
-//                String path = documentSnapshot.getReference().getPath();
-////                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
-//
-//                String chapterName = adapter.getItem(position).getTitle();
-//                String getIdUrl = adapter.getItem(position).getIdUrl();
-////                String getImageUrl = adapter.getItem(position).getImageUrl();
-//                Intent intent = new Intent(getContext(), LongChildOne.class);
-//                intent.putExtra("title", chapterName);
-//                intent.putExtra("idUrl", getIdUrl);
-//                intent.putExtra("id", id);
-//                startActivity(intent);
-//
-//            }
-//        });
 
     }
 
 
 
-    public void initYouTubePlayerView() {
-        getLifecycle().addObserver(youTubePlayerView);
-        View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.long_panel);
+    public void initYouTubePlayerViewOne() {
+        getLifecycle().addObserver(youTubePlayerViewOne);
+        View customPlayerUi = youTubePlayerViewOne.inflateCustomPlayerUi(R.layout.long_panel);
 
         YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
 
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
-                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(LongChildOne.this, customPlayerUi, youTubePlayer, youTubePlayerView);
+                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(LongChildOne.this, customPlayerUi, youTubePlayer, youTubePlayerViewOne);
                 youTubePlayer.addListener(customPlayerUiController);
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
@@ -163,12 +144,40 @@ public class LongChildOne extends AppCompatActivity {
         };
         // disable web ui
         IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
-        youTubePlayerView.initialize(listener, options);
+        youTubePlayerViewOne.initialize(listener, options);
+
     }
 
     private String setText(String string) {
         return string;
     }
+
+
+//    public void cueVideoInitYouTubePlayer() {
+//        getLifecycle().addObserver(youTubePlayerView);
+//        View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.long_panel);
+//
+//        YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
+//
+//            @Override
+//            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+//
+//                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(LongChildOne.this, customPlayerUi, youTubePlayer, youTubePlayerView);
+//                youTubePlayer.addListener(customPlayerUiController);
+////                setPlayNextVideoButtonClickListener(youTubePlayer);
+//                YouTubePlayerUtils.loadOrCueVideo(
+//                        youTubePlayer, getLifecycle(),
+//                        "aa",
+//                        0f
+//                );
+////                Log.d("demo17", getSetText().toString());
+//            }
+//        };
+//        // disable web ui
+//        IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
+//        youTubePlayerView.initialize(listener, options);
+//
+//    }
 
 
 }

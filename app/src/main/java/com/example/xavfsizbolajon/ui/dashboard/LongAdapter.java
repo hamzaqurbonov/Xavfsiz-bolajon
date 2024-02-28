@@ -45,7 +45,6 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
         holder.videoName.setText(String.valueOf(noteModel.getTitle()));
 //        holder.imgChildItem.setImage(noteModel.getImageUrl());
 
-
         Glide.with(holder.itemView.getContext()) // get context from view
                 .load(noteModel.getImageUrl())
                 .centerCrop()

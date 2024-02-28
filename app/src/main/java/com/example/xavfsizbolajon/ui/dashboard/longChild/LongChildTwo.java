@@ -33,7 +33,7 @@ public class LongChildTwo extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView nameText3;
     List<String> activityllist = new ArrayList<>();
-    YouTubePlayerView youTubePlayerView;
+    YouTubePlayerView youTubePlayerViewTwo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class LongChildTwo extends AppCompatActivity {
         });
 
         nameText3.setText(tag);
-        youTubePlayerView = findViewById(R.id.youtube_player_view2);
+        youTubePlayerViewTwo = findViewById(R.id.youtube_player_view_two);
         initYouTubePlayerView();
     }
 
@@ -93,6 +93,7 @@ public class LongChildTwo extends AppCompatActivity {
                 intent.putExtra( "tag",activityllist.get(position));
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
                 startActivity(intent);
+                finish();
             }
 
         };
@@ -100,15 +101,15 @@ public class LongChildTwo extends AppCompatActivity {
     }
 
     public void initYouTubePlayerView() {
-        getLifecycle().addObserver(youTubePlayerView);
-        View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.long_panel);
+        getLifecycle().addObserver(youTubePlayerViewTwo);
+        View customPlayerUi = youTubePlayerViewTwo.inflateCustomPlayerUi(R.layout.long_panel);
 
         YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
 
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
 
-                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(LongChildTwo.this, customPlayerUi, youTubePlayer, youTubePlayerView);
+                LongCustomPlayerUiController customPlayerUiController = new LongCustomPlayerUiController(LongChildTwo.this, customPlayerUi, youTubePlayer, youTubePlayerViewTwo);
                 youTubePlayer.addListener(customPlayerUiController);
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
@@ -121,7 +122,7 @@ public class LongChildTwo extends AppCompatActivity {
         };
         // disable web ui
         IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
-        youTubePlayerView.initialize(listener, options);
+        youTubePlayerViewTwo.initialize(listener, options);
     }
 
     private String setText(String string) {

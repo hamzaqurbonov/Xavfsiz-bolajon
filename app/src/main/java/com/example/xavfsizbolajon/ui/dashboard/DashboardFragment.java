@@ -78,6 +78,8 @@ public class DashboardFragment extends Fragment {
 //        RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3  ));
+//        SpacesItemDecoration decoration = new SpacesItemDecoration(10);
+//        recyclerView.addItemDecoration(decoration);
         recyclerView.setAdapter(adapter);
 
 //      ------------  Delet Udalit---------------
