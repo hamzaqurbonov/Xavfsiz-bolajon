@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -137,12 +138,10 @@ public class HomeFragment extends Fragment  {
         }
 
 
-
-
-
     private void setPlayNextVideoButtonClickListener(final YouTubePlayer youTubePlayer) {
         Button playPreviousVideoButton = getView().findViewById(R.id.previous_video_button);
         Button playNextVideoButton = getView().findViewById(R.id.next_video_button);
+//        LinearLayout linerlayButton = getView().findViewById(R.id.linerlayButton);
 
         playPreviousVideoButton.setOnClickListener(view ->
 

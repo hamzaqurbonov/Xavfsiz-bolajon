@@ -2,6 +2,7 @@ package com.example.xavfsizbolajon.ui.dashboard;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
                 .centerCrop()
                 .placeholder(R.drawable.image18)
                 .into(holder.imgChildItem);
+        Log.d("demo5", "onBindViewHolder: ");
     }
 
 //    public void  deleteItem(int position) {

@@ -62,16 +62,12 @@ public class MainActivity extends AppCompatActivity {
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
         if (itemId == R.id.nav_main) {
-
-            Log.d("demo1", "1");
             selectedFragment = new HomeFragment();
 
         } else if (itemId == R.id.nav_live) {
-            Log.d("demo1", "2");
             selectedFragment = new DashboardFragment();
 
         } else if (itemId == R.id.nav_favorite) {
-            Log.d("demo1", "3");
             selectedFragment = new NotificationsFragment();
 
         }
