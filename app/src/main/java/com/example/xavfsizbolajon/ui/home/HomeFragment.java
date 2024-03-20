@@ -37,10 +37,8 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment  {
 
-//    HomeFragment homeFragment = new HomeFragment();
     private FragmentHomeBinding binding;
     YouTubePlayerView youTubePlayerView;
-    Button playNextVideoButton;
 
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
@@ -49,15 +47,10 @@ public class HomeFragment extends Fragment  {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         youTubePlayerView = view.findViewById(R.id.youtube_player_view1);
-//        playNextVideoButton = view.findViewById(R.id.next_video_button);
         initYouTubePlayerView();
-
-
 
 
         final ArrayAdapter<String> myArrayAdaptrer = new ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,nextArrayList);
@@ -95,8 +88,6 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
-
-
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -109,11 +100,9 @@ public class HomeFragment extends Fragment  {
         }
     }
 
-
     private void initYouTubePlayerView() {
         getLifecycle().addObserver(youTubePlayerView);
         View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
-
             YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -125,25 +114,19 @@ public class HomeFragment extends Fragment  {
                             youTubePlayer, getLifecycle(),
                             "FbjyUl0qqZc", 0f
                     );
-
-//                    HomeViewModel.getNextVideoId()
-
-
 //                    Log.d("demo21", String.valueOf(nextArrayList));
                 }
             };
-            // disable web ui
             IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
             youTubePlayerView.initialize(listener, options);
         }
 
-
     private void setPlayNextVideoButtonClickListener(final YouTubePlayer youTubePlayer) {
-        Button playPreviousVideoButton = getView().findViewById(R.id.previous_video_button);
-        Button playNextVideoButton = getView().findViewById(R.id.next_video_button);
-//        LinearLayout linerlayButton = getView().findViewById(R.id.linerlayButton);
 
-        playPreviousVideoButton.setOnClickListener(view ->
+        LinearLayout previousVideoLinner = getView().findViewById(R.id.previous_video_linner);
+        LinearLayout nextVideoLinner = getView().findViewById(R.id.next_video_linner);
+
+        previousVideoLinner.setOnClickListener(view ->
 
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
@@ -151,9 +134,8 @@ public class HomeFragment extends Fragment  {
                         HomeViewModel.getPreviousVideoId(),
                         0f
                 )
-
         );
-        playNextVideoButton.setOnClickListener(view ->
+        nextVideoLinner.setOnClickListener(view ->
 
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
@@ -161,7 +143,6 @@ public class HomeFragment extends Fragment  {
                         HomeViewModel.getNextVideoId(),
                         0f
                 )
-
         );
 
     }
