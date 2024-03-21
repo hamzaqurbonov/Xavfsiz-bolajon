@@ -1,48 +1,57 @@
 package com.example.xavfsizbolajon.ui.home;
 
-import static com.example.xavfsizbolajon.ui.home.HomeFragment.nextArrayList;
-
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class HomeViewModel extends HomeFragment {
 
     public static ArrayList<String> previousArrayList = new ArrayList<>();
-    public static ArrayList<Integer> integer = new ArrayList<Integer>();
+//    public static ArrayList<Integer> integer = new ArrayList<Integer>();
+    static Map<Integer,String> hashMap = new HashMap<Integer,String>();
     private static final Random random = new Random();
-
+    static int a;
     public static String getPreviousVideoId() {
-        int size = previousArrayList.size();
-        int randomNext = random.nextInt(size);
-        String clon =  previousArrayList.get(randomNext);
-//        int clonID = previousArrayList.size();
-//        int a = clonID -1;
+        int b = a--;
 
+//        int size = previousArrayList.size();
+//        int randomNext = random.nextInt(b);
+//        String clon = previousArrayList.get(randomNext);
+        String previous = hashMap.get(b);
 
-//        Log.d("demo6", String.valueOf(clonID));
-//        Log.d("demo6", String.valueOf(a));
-//        Log.d("demo6", String.valueOf(previousArrayList));
-        return clon;
+//        Log.d("demo21", String.valueOf(hashMap));
+////        Log.d("demo21", String.valueOf(hashMap.get(2)));
+//        Log.d("demo21", String.valueOf(b + "=" +previous));
+
+//        Log.d("demo21", String.valueOf(clon));
+        return previous;
     }
+
+
     public static String getNextVideoId() {
         int size = HomeFragment.nextArrayList.size();
         int randomNext = random.nextInt(size);
         String clon =  nextArrayList.get(randomNext);
-//        previousArrayList.add(clon);
-//        integer.add();
+        previousArrayList.add(clon);
 
 
-//        Log.d("demo21", String.valueOf(size));
-//        Log.d("demo21", String.valueOf(nextArrayList));
+        a++;
+        Integer key = a;
+        hashMap.put(key,clon);
+
+//        Log.d("demo21", String.valueOf(hashMap));
+//        Log.d("demo21", String.valueOf(a));
         return clon;
     }
-   }
+
+
+
+
+
+}
 
 //
 //

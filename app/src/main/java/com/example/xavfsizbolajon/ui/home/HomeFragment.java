@@ -88,6 +88,8 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
+
+
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -114,7 +116,8 @@ public class HomeFragment extends Fragment  {
                             youTubePlayer, getLifecycle(),
                             "FbjyUl0qqZc", 0f
                     );
-//                    Log.d("demo21", String.valueOf(nextArrayList));
+
+
                 }
             };
             IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
@@ -134,8 +137,10 @@ public class HomeFragment extends Fragment  {
                         HomeViewModel.getPreviousVideoId(),
                         0f
                 )
+
         );
         nextVideoLinner.setOnClickListener(view ->
+
 
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
@@ -143,14 +148,20 @@ public class HomeFragment extends Fragment  {
                         HomeViewModel.getNextVideoId(),
                         0f
                 )
+
         );
 
     }
+
+
+
+
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+
 
 }
