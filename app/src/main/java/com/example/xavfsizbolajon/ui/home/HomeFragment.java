@@ -20,11 +20,15 @@ import com.example.xavfsizbolajon.MainActivity;
 import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentHomeBinding;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -33,13 +37,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment  {
 
     private FragmentHomeBinding binding;
     YouTubePlayerView youTubePlayerView;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
     DatabaseReference myRef;
@@ -52,37 +57,64 @@ public class HomeFragment extends Fragment  {
         youTubePlayerView = view.findViewById(R.id.youtube_player_view1);
         initYouTubePlayerView();
 
-
-        final ArrayAdapter<String> myArrayAdaptrer = new ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,nextArrayList);
-
-        myRef = FirebaseDatabase.getInstance().getReference();
-        myRef.addChildEventListener(new ChildEventListener() {
+        db.collection("main").document("short").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                        List<String> list = (ArrayList<String>) document.get("tagm");
+                        nextArrayList = (ArrayList<String>) document.get("nature");
 
-                String value =  snapshot.getValue(String.class);
-                nextArrayList.add(value);
-                myArrayAdaptrer.notifyDataSetChanged();
+                        Log.d("demo23", String.valueOf(nextArrayList));
+//
+//                        Map<String, Object> map = document.getData();
+//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                            if (entry.getKey().equals("idUrl")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                            if (entry.getKey().equals("tagm")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                        }
+                    }
+                }
+            }
 
-//                Log.d("demo21", String.valueOf(nextArrayList));
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                myArrayAdaptrer.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
         });
+
+
+
+//        final ArrayAdapter<String> myArrayAdaptrer = new ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,nextArrayList);
+//
+//        myRef = FirebaseDatabase.getInstance().getReference();
+//        myRef.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//                String value =  snapshot.getValue(String.class);
+//                nextArrayList.add(value);
+//                myArrayAdaptrer.notifyDataSetChanged();
+//
+////                Log.d("demo21", String.valueOf(nextArrayList));
+//            }
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                myArrayAdaptrer.notifyDataSetChanged();
+//            }
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
         return view;
@@ -134,7 +166,7 @@ public class HomeFragment extends Fragment  {
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
                         getLifecycle(),
-                        HomeViewModel.getPreviousVideoId(),
+                        PreviousHashMap.getPreviousVideoId(),
                         0f
                 )
 

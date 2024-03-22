@@ -14,40 +14,20 @@ public class HomeViewModel extends HomeFragment {
     static Map<Integer,String> hashMap = new HashMap<Integer,String>();
     private static final Random random = new Random();
     static int a;
-    public static String getPreviousVideoId() {
-        int b = a--;
-
-//        int size = previousArrayList.size();
-//        int randomNext = random.nextInt(b);
-//        String clon = previousArrayList.get(randomNext);
-        String previous = hashMap.get(b);
-
-//        Log.d("demo21", String.valueOf(hashMap));
-////        Log.d("demo21", String.valueOf(hashMap.get(2)));
-//        Log.d("demo21", String.valueOf(b + "=" +previous));
-
-//        Log.d("demo21", String.valueOf(clon));
-        return previous;
-    }
-
 
     public static String getNextVideoId() {
         int size = HomeFragment.nextArrayList.size();
         int randomNext = random.nextInt(size);
         String clon =  nextArrayList.get(randomNext);
         previousArrayList.add(clon);
-
-
         a++;
         Integer key = a;
         hashMap.put(key,clon);
 
-//        Log.d("demo21", String.valueOf(hashMap));
-//        Log.d("demo21", String.valueOf(a));
+        Log.d("demo21", String.valueOf(hashMap));
+        Log.d("demo21", String.valueOf(a));
         return clon;
     }
-
-
 
 
 
