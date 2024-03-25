@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment  {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
                         nextArrayList = (ArrayList<String>) document.get("nature");
 
-                        Log.d("demo23", String.valueOf(nextArrayList));
+                        Log.d("demo21", String.valueOf(nextArrayList));
 //
 //                        Map<String, Object> map = document.getData();
 //                        for (Map.Entry<String, Object> entry : map.entrySet()) {
