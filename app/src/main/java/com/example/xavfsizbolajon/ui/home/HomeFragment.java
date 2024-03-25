@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment  {
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
                         getLifecycle(),
-                        PreviousHashMap.getPreviousVideoId(),
+                        PreviousModel.getPreviousVideoId(),
                         0f
                 )
 
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment  {
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
                         getLifecycle(),
-                        HomeViewModel.getNextVideoId(),
+                        NextModel.getNextVideoId(),
                         0f
                 )
 
