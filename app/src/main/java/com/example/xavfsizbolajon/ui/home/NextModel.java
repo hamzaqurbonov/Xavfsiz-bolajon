@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class NextModel extends HomeFragment {
 
-    public static ArrayList<String> previousArrayList = new ArrayList<>();
     static HashMap<Integer,String> mapPreviousNext = new HashMap<>();
     private static final Random random = new Random();
     static int previousNext;
@@ -17,16 +16,15 @@ public class NextModel extends HomeFragment {
         int size = HomeFragment.nextArrayList.size();
         int randomNext = random.nextInt(size);
         String clon =  nextArrayList.get(randomNext);
-        previousArrayList.add(clon);
         previousNext++;
 
         if (previousNext <= mapPreviousNext.size()) {
             String previous = mapPreviousNext.get(previousNext);
-//            Log.d("demo22", String.valueOf( "NextPrevious" + " a=" + a + " b=" + b +  " " + previous + " "+ hashMap));
+//            Log.d("demo22", String.valueOf( "NextPrevious" + " a=" + previousNext  +  " " + previous + " "+ mapPreviousNext));
             return previous;
         } else {
             mapPreviousNext.put(previousNext,clon);
-//            Log.d("demo22", String.valueOf( "Next" + " a=" + a + " b=" + b +  " "+ clon + " "+ hashMap));
+//            Log.d("demo22", String.valueOf( "Next" + " a=" + previousNext +  " "+ clon + " "+ mapPreviousNext));
             return clon;
         }
     }

@@ -137,6 +137,7 @@ public class HomeFragment extends Fragment  {
     private void initYouTubePlayerView() {
         getLifecycle().addObserver(youTubePlayerView);
         View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
+
             YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
@@ -146,12 +147,13 @@ public class HomeFragment extends Fragment  {
                     setPlayNextVideoButtonClickListener(youTubePlayer);
                     YouTubePlayerUtils.loadOrCueVideo(
                             youTubePlayer, getLifecycle(),
-                            "FbjyUl0qqZc", 0f
+                            NextModel.getNextVideoId(), 0f
                     );
-
-
+//                    "FbjyUl0qqZc"
                 }
             };
+
+
             IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
             youTubePlayerView.initialize(listener, options);
         }
@@ -184,10 +186,6 @@ public class HomeFragment extends Fragment  {
         );
 
     }
-
-
-
-
 
     @Override
     public void onDestroyView() {
