@@ -22,6 +22,5 @@ public class PreviousModel {
                 return previous;
             }
 
-
     }
 }

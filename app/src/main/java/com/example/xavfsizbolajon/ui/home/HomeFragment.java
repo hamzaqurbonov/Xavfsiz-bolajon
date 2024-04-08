@@ -1,5 +1,6 @@
 package com.example.xavfsizbolajon.ui.home;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.xavfsizbolajon.MainActivity;
 import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentHomeBinding;
 
+import com.example.xavfsizbolajon.ui.dashboard.LongAdapter;
+import com.example.xavfsizbolajon.ui.dashboard.LongModel;
+import com.example.xavfsizbolajon.ui.dashboard.longChild.LongChildOne;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
@@ -27,8 +34,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -37,14 +47,21 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class HomeFragment extends Fragment  {
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference noteDB = db.document("main/short");
+    private CollectionReference hadRef = db.collection("Notebook");
+
     private FragmentHomeBinding binding;
     YouTubePlayerView youTubePlayerView;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+//    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
     DatabaseReference myRef;
@@ -56,6 +73,7 @@ public class HomeFragment extends Fragment  {
 
         youTubePlayerView = view.findViewById(R.id.youtube_player_view1);
         initYouTubePlayerView();
+        setUpRecyclerView();
 
         db.collection("main").document("short").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -66,7 +84,7 @@ public class HomeFragment extends Fragment  {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
                         nextArrayList = (ArrayList<String>) document.get("nature");
 
-                        Log.d("demo21", String.valueOf(nextArrayList));
+//                        Log.d("demo22", String.valueOf(nextArrayList));
 //
 //                        Map<String, Object> map = document.getData();
 //                        for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -83,42 +101,88 @@ public class HomeFragment extends Fragment  {
 
         });
 
+        db.collection("main").document("WorkshopParent").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                        List<String> list = (ArrayList<String>) document.get("tagm");
+//                        nextArrayList = (ArrayList<String>) document.get("nature");
 
+//                        Log.d("demo24", String.valueOf(1));
+//
+                        Map<String, Object> map = document.getData();
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("workshopChild")) {
+                                Log.d("demo24", entry.getValue().toString());
+                               Log.d("demo24", entry.getKey().toString());
+                                Log.d("demo24", entry.getKey().toString());
+                            }
+//                            if (entry.getKey().trim().equals("workshopChild")) {
+//                                Log.d("demo24", entry.getValue().toString());
+//                            }
+                        }
+                    }
+                }
+            }
 
-//        final ArrayAdapter<String> myArrayAdaptrer = new ArrayAdapter<String>(requireContext(),android.R.layout.simple_list_item_1,nextArrayList);
-//
-//        myRef = FirebaseDatabase.getInstance().getReference();
-//        myRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//                String value =  snapshot.getValue(String.class);
-//                nextArrayList.add(value);
-//                myArrayAdaptrer.notifyDataSetChanged();
-//
-////                Log.d("demo21", String.valueOf(nextArrayList));
-//            }
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                myArrayAdaptrer.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        });
 
 
         return view;
     }
+
+
+    private void setUpRecyclerView() {
+
+        Query query = hadRef.orderBy("idUrl", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<LongModel> options = new FirestoreRecyclerOptions.Builder<LongModel>().setQuery(query, LongModel.class).build();
+//        Log.d("demo22", String.valueOf( query));
+//        adapter = new LongAdapter(options);
+//
+//
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3  ));
+//
+//        recyclerView.setAdapter(adapter);
+//
+//
+//        adapter.setItemClickListner(new LongAdapter.OnItemClickListner() {
+//            @Override
+//            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+//                LongModel noteMode = documentSnapshot.toObject(LongModel.class);
+//                String id = documentSnapshot.getId();
+//                String path = documentSnapshot.getReference().getPath();
+//                Toast.makeText(getActivity(),  position + path  + id , Toast.LENGTH_SHORT).show();
+
+//                String chapterName = adapter.getItem(position).getTitle();
+//                String getIdUrl = adapter.getItem(position).getIdUrl();
+////                String getImageUrl = adapter.getItem(position).getImageUrl();
+//                Intent intent = new Intent(getContext(), LongChildOne.class);
+//                intent.putExtra("title", chapterName);
+//                intent.putExtra("tag", getIdUrl);
+//                intent.putExtra("id", id);
+//                startActivity(intent);
+
+//            }
+//        });
+
+    }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        adapter.startListening();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        adapter.stopListening();
+//    }
+
 
 
 

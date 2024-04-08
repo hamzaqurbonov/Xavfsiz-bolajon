@@ -39,6 +39,7 @@ public class LongChildOne extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
     TextView nameText;
+    String title;
     List<String> activityllist = new ArrayList<>();
     YouTubePlayerView youTubePlayerViewOne;
     @Override
@@ -48,7 +49,7 @@ public class LongChildOne extends AppCompatActivity {
 
 
         String model = getIntent().getExtras().getString("id");
-        String idUrl = getIntent().getExtras().getString("idUrl");
+         title = getIntent().getExtras().getString("title");
 
 
         db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -64,22 +65,22 @@ public class LongChildOne extends AppCompatActivity {
                         setOnClickListner();
                         refreshAdapter(activityllist);
 //
-//                        Map<String, Object> map = document.getData();
-//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-//                            if (entry.getKey().equals("idUrl")) {
-//                                Log.d("demo22", entry.getValue().toString());
-//                            }
-//                            if (entry.getKey().equals("tagm")) {
-//                                Log.d("demo22", entry.getValue().toString());
-//                            }
-//                        }
+                        Map<String, Object> map = document.getData();
+                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+                            if (entry.getKey().equals("idUrl")) {
+                                Log.d("demo22", entry.getValue().toString());
+                            }
+                            if (entry.getKey().equals("tagm")) {
+                                Log.d("demo22", entry.getValue().toString());
+                            }
+                        }
                     }
                 }
             }
 
         });
-
-//        nameText.setText(model);
+        nameText = findViewById(R.id.nameTextView);
+        nameText.setText(title);
 
         youTubePlayerViewOne = findViewById(R.id.youtube_player_view_one);
         initYouTubePlayerViewOne();
@@ -124,6 +125,7 @@ public class LongChildOne extends AppCompatActivity {
                 intent.putExtra( "tag",activityllist.get(position));
 
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
+                intent.putExtra("title",  title);
                 startActivity(intent);
                 finish();
             }

@@ -105,7 +105,7 @@ public class DashboardFragment extends Fragment {
                 String id = documentSnapshot.getId();
                 String path = documentSnapshot.getReference().getPath();
 //                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
-
+                Log.d("demo22", String.valueOf( path));
                 String chapterName = adapter.getItem(position).getTitle();
                 String getIdUrl = adapter.getItem(position).getIdUrl();
 //                String getImageUrl = adapter.getItem(position).getImageUrl();
