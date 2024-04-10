@@ -13,22 +13,13 @@ public class NextModel extends HomeFragment {
     static HashMap<Integer,String> mapPreviousNext = new HashMap<>();
     private static final Random random = new Random();
     static int previousNext;
+
     public static String getNextVideoId() {
         previousNext++;
 
-        int size = HomeFragment.nextArrayList.size();
+        int size = nextArrayList.size();
         int randomNext = random.nextInt(size);
-        String clon =  nextArrayList.get(randomNext);
-
-
-        Log.d("demo22", String.valueOf(HomeFragment.nextArrayList));
-
-        Collections.shuffle(HomeFragment.nextArrayList);
-
-        Log.d("demo22", String.valueOf(previousNext));
-
-        Log.d("demo22", String.valueOf(HomeFragment.nextArrayList));
-
+        String clon =  nextArrayList.get(previousNext);
 
         if (previousNext <= mapPreviousNext.size()) {
             String previous = mapPreviousNext.get(previousNext);
@@ -37,6 +28,7 @@ public class NextModel extends HomeFragment {
         } else {
             mapPreviousNext.put(previousNext,clon);
 //            Log.d("demo22", String.valueOf( "Next" + " a=" + previousNext +  " "+ clon + " "+ mapPreviousNext));
+            Log.d("demo22", "arreyPreviousNext " + clon + " " + previousNext );
             return clon;
         }
     }

@@ -1,39 +1,24 @@
 package com.example.xavfsizbolajon.ui.home;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.xavfsizbolajon.MainActivity;
 import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentHomeBinding;
 
-import com.example.xavfsizbolajon.ui.dashboard.LongAdapter;
 import com.example.xavfsizbolajon.ui.dashboard.LongModel;
-import com.example.xavfsizbolajon.ui.dashboard.longChild.LongChildOne;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -47,11 +32,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment  {
 
@@ -82,9 +64,9 @@ public class HomeFragment extends Fragment  {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
-                        nextArrayList = (ArrayList<String>) document.get("nature");
-
-//                        Log.d("demo22", String.valueOf(nextArrayList));
+//                        nextArrayList = (ArrayList<String>) document.get("nature");
+                        Collections.shuffle( nextArrayList = (ArrayList<String>) document.get("nature"));
+//
 //
 //                        Map<String, Object> map = document.getData();
 //                        for (Map.Entry<String, Object> entry : map.entrySet()) {
