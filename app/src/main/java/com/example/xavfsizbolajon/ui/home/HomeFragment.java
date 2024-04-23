@@ -24,6 +24,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -33,6 +35,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment  {
@@ -57,31 +60,53 @@ public class HomeFragment extends Fragment  {
         initYouTubePlayerView();
         setUpRecyclerView();
 
-        db.collection("main").document("short").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-//                        List<String> list = (ArrayList<String>) document.get("tagm");
-//                        nextArrayList = (ArrayList<String>) document.get("nature");
-                        Collections.shuffle( nextArrayList = (ArrayList<String>) document.get("nature"));
-//
-//
-//                        Map<String, Object> map = document.getData();
-//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-//                            if (entry.getKey().equals("idUrl")) {
-//                                Log.d("demo22", entry.getValue().toString());
-//                            }
-//                            if (entry.getKey().equals("tagm")) {
-//                                Log.d("demo22", entry.getValue().toString());
-//                            }
-//                        }
-                    }
-                }
-            }
+        db.collection("Shorts").orderBy("key").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
 
-        });
+                                ArrayList<String> arrayMapList = (ArrayList<String>) document.get("key");
+                                for (Object transaction: arrayMapList) {
+                                    Map values = (Map)transaction;
+                                     nextArrayList.add((String) values.get("id"));
+                                }
+                            }
+                            Collections.shuffle( nextArrayList);
+//                            Log.d("demo1", "Map1 " + nextArrayList);
+                        } else {
+                            Log.d("demo1", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+//        db.collection("main").document("short")
+//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+////                        List<String> list = (ArrayList<String>) document.get("tagm");
+////                        nextArrayList = (ArrayList<String>) document.get("nature");
+//                        Collections.shuffle( nextArrayList = (ArrayList<String>) document.get("nature"));
+////
+////
+////                        Map<String, Object> map = document.getData();
+////                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+////                            if (entry.getKey().equals("idUrl")) {
+////                                Log.d("demo22", entry.getValue().toString());
+////                            }
+////                            if (entry.getKey().equals("tagm")) {
+////                                Log.d("demo22", entry.getValue().toString());
+////                            }
+////                        }
+//                    }
+//                }
+//            }
+//
+//        });
 
         db.collection("main").document("WorkshopParent").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
