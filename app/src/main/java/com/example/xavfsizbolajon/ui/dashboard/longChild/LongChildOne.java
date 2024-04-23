@@ -39,7 +39,7 @@ public class LongChildOne extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
     TextView nameText;
-    String title;
+    String getName;
     List<String> activityllist = new ArrayList<>();
     YouTubePlayerView youTubePlayerViewOne;
     @Override
@@ -49,7 +49,7 @@ public class LongChildOne extends AppCompatActivity {
 
 
         String model = getIntent().getExtras().getString("id");
-         title = getIntent().getExtras().getString("title");
+        getName = getIntent().getExtras().getString("getName");
 
 
         db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -80,7 +80,7 @@ public class LongChildOne extends AppCompatActivity {
 
         });
         nameText = findViewById(R.id.nameTextView);
-        nameText.setText(title);
+        nameText.setText(getName);
 
         youTubePlayerViewOne = findViewById(R.id.youtube_player_view_one);
         initYouTubePlayerViewOne();
@@ -125,7 +125,7 @@ public class LongChildOne extends AppCompatActivity {
                 intent.putExtra( "tag",activityllist.get(position));
 
                 intent.putExtra("id", getIntent().getExtras().getString("id"));
-                intent.putExtra("title",  title);
+                intent.putExtra("title",  getName);
                 startActivity(intent);
                 finish();
             }

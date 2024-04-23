@@ -42,16 +42,16 @@ public class LongAdapter extends FirestoreRecyclerAdapter<LongModel, LongAdapter
     @Override
     protected void onBindViewHolder(@NonNull LongHolder holder, int position, @NonNull LongModel noteModel) {
 
-        holder.Url.setText(noteModel.getTitle());
-        holder.videoName.setText(String.valueOf(noteModel.getTitle()));
+        holder.Url.setText(noteModel.getName());
+        holder.videoName.setText(String.valueOf(noteModel.getName()));
 //        holder.imgChildItem.setImage(noteModel.getImageUrl());
 
         Glide.with(holder.itemView.getContext()) // get context from view
-                .load(noteModel.getImageUrl())
+                .load(noteModel.getImg())
                 .centerCrop()
                 .placeholder(R.drawable.image18)
                 .into(holder.imgChildItem);
-        Log.d("demo5", "onBindViewHolder: ");
+//        Log.d("demo5", "onBindViewHolder: ");
     }
 
 //    public void  deleteItem(int position) {

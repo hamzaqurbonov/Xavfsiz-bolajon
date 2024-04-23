@@ -43,7 +43,7 @@ public class DashboardFragment extends Fragment {
     private LongAdapter adapter;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference noteDB = db.document("main/short");
-    private CollectionReference hadRef = db.collection("Notebook");
+    private CollectionReference hadRef = db.collection("FullVideo");
     private RecyclerView recyclerView;
     private FragmentDashboardBinding binding;
 
@@ -71,7 +71,7 @@ public class DashboardFragment extends Fragment {
 
     private void setUpRecyclerView() {
 
-        Query query = hadRef.orderBy("idUrl", Query.Direction.DESCENDING);
+        Query query = hadRef.orderBy("id", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<LongModel> options = new FirestoreRecyclerOptions.Builder<LongModel>().setQuery(query, LongModel.class).build();
 
@@ -106,12 +106,13 @@ public class DashboardFragment extends Fragment {
                 String path = documentSnapshot.getReference().getPath();
 //                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
                 Log.d("demo22", String.valueOf( path));
-                String chapterName = adapter.getItem(position).getTitle();
-                String getIdUrl = adapter.getItem(position).getIdUrl();
+                String getName = adapter.getItem(position).getName();
+                String getId = adapter.getItem(position).getId();
+
 //                String getImageUrl = adapter.getItem(position).getImageUrl();
                 Intent intent = new Intent(getContext(), LongChildOne.class);
-                intent.putExtra("title", chapterName);
-                intent.putExtra("tag", getIdUrl);
+                intent.putExtra("getName", getName);
+                intent.putExtra("tag", getId);
                 intent.putExtra("id", id);
                 startActivity(intent);
 

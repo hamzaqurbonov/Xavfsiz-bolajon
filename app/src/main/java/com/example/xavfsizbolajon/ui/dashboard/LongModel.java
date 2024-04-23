@@ -6,30 +6,29 @@ import java.util.List;
 
 public class LongModel {
     private String documentId;
-    private String title;
-    private String idUrl;
-    private String imageUrl;
+    private String name;
+    private String id;
+    private String img;
 //    List<String> tags;
 
     public LongModel() {
-        this.idUrl = idUrl;
-        this.imageUrl = imageUrl;
-        this.title = title;
+        this.id = id;
+        this.img = img;
+        this.name = name;
 //        this.tags = tags;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public String getIdUrl() {
-        return idUrl;
+    public String getId() {
+        return id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImg() {
+        return img;
     }
-
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
