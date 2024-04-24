@@ -25,6 +25,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LongChildTwo extends AppCompatActivity {
 
@@ -33,7 +34,8 @@ public class LongChildTwo extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView nameText3;
     String title;
-    String model;
+    String dokumentIdModel;
+    String partId;
     List<String> activityllist = new ArrayList<>();
     YouTubePlayerView youTubePlayerViewTwo;
     @Override
@@ -43,18 +45,24 @@ public class LongChildTwo extends AppCompatActivity {
 
         nameText3 = findViewById(R.id.nameText3);
 
-        model = getIntent().getExtras().getString("id");
-        String tag = getIntent().getExtras().getString("tag");
-        title = getIntent().getExtras().getString("title");
+        dokumentIdModel = getIntent().getExtras().getString("dokumentId");
+        title = getIntent().getExtras().getString("getName");
+        partId = getIntent().getExtras().getString("part");
 
-        db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("FullVideo").document(dokumentIdModel).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
-                        activityllist = (List<String>) document.get("tagm");
+//                        activityllist = (List<String>) document.get("tagm");
+
+                        ArrayList<String> arrayMapList = (ArrayList<String>) document.get("part");
+                        for (Object transaction: arrayMapList) {
+                            Map values = (Map)transaction;
+                            activityllist.add((String) values.get("id"));
+                        }
 
                         initViews();
                         setOnClickListner();
@@ -93,9 +101,9 @@ public class LongChildTwo extends AppCompatActivity {
             public void onClick(View v, int position) {
                 Intent intent = new Intent(LongChildTwo.this, LongChildOne.class);
 //                Toast.makeText(MainActivity2.this,  "MainActivity2", Toast.LENGTH_SHORT).show();
-                intent.putExtra( "tag",activityllist.get(position));
-                intent.putExtra("id", model);
-                intent.putExtra("title", title);
+                intent.putExtra( "part",activityllist.get(position));
+                intent.putExtra("dokumentId", dokumentIdModel);
+                intent.putExtra("getName", title);
                 startActivity(intent);
                 finish();
             }
@@ -118,7 +126,7 @@ public class LongChildTwo extends AppCompatActivity {
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer, getLifecycle(),
-                        setText(getIntent().getExtras().getString("tag")),
+                        setText(partId),
                         0f
                 );
 //                Log.d("demo17", getSetText().toString());

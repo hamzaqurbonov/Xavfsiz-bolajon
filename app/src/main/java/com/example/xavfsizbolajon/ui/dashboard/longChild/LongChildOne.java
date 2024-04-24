@@ -40,6 +40,8 @@ public class LongChildOne extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView nameText;
     String getName;
+    String dokumentIdModel;
+    String partId;
     List<String> activityllist = new ArrayList<>();
     YouTubePlayerView youTubePlayerViewOne;
     @Override
@@ -48,32 +50,39 @@ public class LongChildOne extends AppCompatActivity {
         setContentView(R.layout.activity_long_child_one);
 
 
-        String model = getIntent().getExtras().getString("id");
+        dokumentIdModel = getIntent().getExtras().getString("dokumentId");
         getName = getIntent().getExtras().getString("getName");
+        partId = getIntent().getExtras().getString("part");
 
 
-        db.collection("Notebook").document(model).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("FullVideo").document(dokumentIdModel).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
-                        activityllist = (List<String>) document.get("tagm");
+//                        activityllist = (List<String>) document.get("tagm");
+
+                        ArrayList<String> arrayMapList = (ArrayList<String>) document.get("part");
+                        for (Object transaction: arrayMapList) {
+                            Map values = (Map)transaction;
+                            activityllist.add((String) values.get("id"));
+                        }
 
                         initViews();
                         setOnClickListner();
                         refreshAdapter(activityllist);
 //
-                        Map<String, Object> map = document.getData();
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            if (entry.getKey().equals("idUrl")) {
-                                Log.d("demo22", entry.getValue().toString());
-                            }
-                            if (entry.getKey().equals("tagm")) {
-                                Log.d("demo22", entry.getValue().toString());
-                            }
-                        }
+//                        Map<String, Object> map = document.getData();
+//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                            if (entry.getKey().equals("idUrl")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                            if (entry.getKey().equals("tagm")) {
+//                                Log.d("demo22", entry.getValue().toString());
+//                            }
+//                        }
                     }
                 }
             }
@@ -120,12 +129,12 @@ public class LongChildOne extends AppCompatActivity {
                 Intent intent = new Intent(LongChildOne.this, LongChildTwo.class);
 //                cueVideoInitYouTubePlayer();
 
-                Toast.makeText(LongChildOne.this, "ID " + activityllist.get(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LongChildOne.this, "ID " + activityllist.get(position), Toast.LENGTH_SHORT).show();
                 Log.d("demo1", activityllist.get(position));
-                intent.putExtra( "tag",activityllist.get(position));
+                intent.putExtra( "part",activityllist.get(position));
 
-                intent.putExtra("id", getIntent().getExtras().getString("id"));
-                intent.putExtra("title",  getName);
+                intent.putExtra("dokumentId", dokumentIdModel);
+                intent.putExtra("getName",  getName);
                 startActivity(intent);
                 finish();
             }
@@ -150,7 +159,7 @@ public class LongChildOne extends AppCompatActivity {
 //                setPlayNextVideoButtonClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer, getLifecycle(),
-                        setText(getIntent().getExtras().getString("tag")),
+                        setText(partId),
                         0f
                 );
 //                Log.d("demo17", getSetText().toString());

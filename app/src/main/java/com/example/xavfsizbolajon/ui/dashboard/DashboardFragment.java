@@ -102,18 +102,18 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 LongModel noteMode = documentSnapshot.toObject(LongModel.class);
-                String id = documentSnapshot.getId();
+                String dokumentId = documentSnapshot.getId();
                 String path = documentSnapshot.getReference().getPath();
 //                Toast.makeText(MainActivity.this,  position + path  + id , Toast.LENGTH_SHORT).show();
-                Log.d("demo22", String.valueOf( path));
+//                Log.d("demo22", String.valueOf( path));
                 String getName = adapter.getItem(position).getName();
                 String getId = adapter.getItem(position).getId();
 
 //                String getImageUrl = adapter.getItem(position).getImageUrl();
                 Intent intent = new Intent(getContext(), LongChildOne.class);
                 intent.putExtra("getName", getName);
-                intent.putExtra("tag", getId);
-                intent.putExtra("id", id);
+                intent.putExtra("part", getId);
+                intent.putExtra("dokumentId", dokumentId);
                 startActivity(intent);
 
             }
