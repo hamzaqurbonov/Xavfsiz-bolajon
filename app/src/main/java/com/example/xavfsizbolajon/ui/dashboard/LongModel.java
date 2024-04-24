@@ -5,27 +5,22 @@ import com.google.firebase.firestore.Exclude;
 import java.util.List;
 
 public class LongModel {
-    private String documentId;
-    private String name;
-    private String id;
-    private String img;
-//    List<String> tags;
+    public  String documentId;
+    public  String name, id, img;
+    public   List<PartModel> part;
 
-    public LongModel() {
+    public LongModel(List<PartModel> part, String name, String id, String img) {
         this.id = id;
         this.img = img;
         this.name = name;
+        this.part = part;
 //        this.tags = tags;
     }
 
-    public String getName() {
-        return name;
-    }
-
+    public String getName() { return name; }
     public String getId() {
         return id;
     }
-
     public String getImg() {
         return img;
     }
@@ -37,7 +32,13 @@ public class LongModel {
         return documentId;
     }
 
-//    public List<String> getTags() {
-//        return tags;
-//    }
+}
+
+class PartModel {
+    public  String id, name, img;
+    public  PartModel(String id, String name, String img){
+        this.id = id;
+        this.img = img;
+        this.name = name;
+    }
 }

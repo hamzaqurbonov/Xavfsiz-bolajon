@@ -33,7 +33,7 @@ public class LongChildTwo extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
     TextView nameText3;
-    String title;
+    String getName;
     String dokumentIdModel;
     String partId;
     List<String> activityllist = new ArrayList<>();
@@ -46,7 +46,7 @@ public class LongChildTwo extends AppCompatActivity {
         nameText3 = findViewById(R.id.nameText3);
 
         dokumentIdModel = getIntent().getExtras().getString("dokumentId");
-        title = getIntent().getExtras().getString("getName");
+        getName = getIntent().getExtras().getString("getName");
         partId = getIntent().getExtras().getString("part");
 
         db.collection("FullVideo").document(dokumentIdModel).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -75,7 +75,7 @@ public class LongChildTwo extends AppCompatActivity {
 
         });
 
-        nameText3.setText(title);
+        nameText3.setText(getName);
         youTubePlayerViewTwo = findViewById(R.id.youtube_player_view_two);
         initYouTubePlayerView();
     }
@@ -103,7 +103,7 @@ public class LongChildTwo extends AppCompatActivity {
 //                Toast.makeText(MainActivity2.this,  "MainActivity2", Toast.LENGTH_SHORT).show();
                 intent.putExtra( "part",activityllist.get(position));
                 intent.putExtra("dokumentId", dokumentIdModel);
-                intent.putExtra("getName", title);
+                intent.putExtra("getName", getName);
                 startActivity(intent);
                 finish();
             }
