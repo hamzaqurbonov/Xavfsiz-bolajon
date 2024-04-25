@@ -42,6 +42,8 @@ public class LongChildOne extends AppCompatActivity {
     String getName;
     String dokumentIdModel;
     String partId;
+
+    User city;
     List<String> activityllist = new ArrayList<>();
     YouTubePlayerView youTubePlayerViewOne;
     @Override
@@ -55,6 +57,27 @@ public class LongChildOne extends AppCompatActivity {
         partId = getIntent().getExtras().getString("part");
 
 
+
+//        db.collection("FullVideo").document(dokumentIdModel).get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                DocumentSnapshot document = task.getResult();
+//                if (document.exists()) {
+//                    List<Map<String, Object>> users = (List<Map<String, Object>>) document.get("part");
+//
+////                    City city = document.toObject(City.class);
+//
+//                    List<User> users2 = document.toObject(UserDocument.class).users;
+//
+//
+////                    Log.d("demo1", "UserModel getName " + users3);
+//
+//                }
+//            }
+//        });
+
+
+
+
         db.collection("FullVideo").document(dokumentIdModel).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -64,11 +87,25 @@ public class LongChildOne extends AppCompatActivity {
 //                        List<String> list = (ArrayList<String>) document.get("tagm");
 //                        activityllist = (List<String>) document.get("tagm");
 
+
                         ArrayList<String> arrayMapList = (ArrayList<String>) document.get("part");
                         for (Object transaction: arrayMapList) {
                             Map values = (Map)transaction;
                             activityllist.add((String) values.get("id"));
+//                            city = arrayMapList.equals(User.class);
+
+
+
                         }
+//                        Log.d("demo1", "UserModel getName " + city.getNomi());
+
+
+//                        PartModel city = document.toObject(PartModel.class);
+
+//                        Log.d("demo1", "PartModel getName " + transactions.getName());
+//                        Log.d("demo1", "PartModel getPart " + transactions.getPart());
+//                        Log.d("demo1", "PartModel getImg " + city.getImg());
+
 
                         initViews();
                         setOnClickListner();

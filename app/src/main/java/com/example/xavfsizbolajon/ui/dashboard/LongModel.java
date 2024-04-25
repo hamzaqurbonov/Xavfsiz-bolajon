@@ -7,14 +7,13 @@ import java.util.List;
 public class LongModel {
     public  String documentId;
     public  String name, id, img;
-    public   List<PartModel> part;
+//    public   List<PartModel> part;
 
-    public LongModel(List<PartModel> part, String name, String id, String img) {
+    public LongModel() {
         this.id = id;
         this.img = img;
         this.name = name;
-        this.part = part;
-//        this.tags = tags;
+//        this.part = part;
     }
 
     public String getName() { return name; }
@@ -24,21 +23,36 @@ public class LongModel {
     public String getImg() {
         return img;
     }
-    public void setDocumentId(String documentId) {
-        this.documentId = documentId;
-    }
-    @Exclude
-    public String getDocumentId() {
-        return documentId;
-    }
+//    public void setDocumentId(String documentId) {
+//        this.documentId = documentId;
+//    }
+//    @Exclude
+//    public String getDocumentId() {
+//        return documentId;
+//    }
 
+
+
+//    class PartModel {
+//        public  String id, name, img;
+//        public  PartModel(){
+//            this.id = id;
+//            this.img = img;
+//            this.name = name;
+//        }
+//
+//        public String getId() {
+//            return id;
+//        }
+//
+//        public String getName() {
+//            return name;
+//        }
+//
+//        public String getImg() {
+//            return img;
+//        }
+//    }
 }
 
-class PartModel {
-    public  String id, name, img;
-    public  PartModel(String id, String name, String img){
-        this.id = id;
-        this.img = img;
-        this.name = name;
-    }
-}
+
