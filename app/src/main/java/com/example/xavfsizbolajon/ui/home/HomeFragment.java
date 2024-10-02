@@ -38,6 +38,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFram
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,127 +51,70 @@ public class HomeFragment extends Fragment  {
     YouTubePlayerView youTubePlayerView;
     YouTubePlayer youTubePlayer;
     FrameLayout frameLayout;
-
-    private List<String> videoIds;
-
+    FragmentHomeBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference noteDB = db.document("main/short");
-    private CollectionReference hadRef = db.collection("Notebook");
-
-    private FragmentHomeBinding binding;
-
-//    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
-    DatabaseReference myRef;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         frameLayout = view.findViewById(R.id.frame_layout);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         getLifecycle().addObserver(youTubePlayerView);
 
-
-
-
-        videoIds = new ArrayList<>();
-        videoIds.add("NwDCIg2JXxY"); // биринчи видео ID
-        videoIds.add("lXZzRJHd5ME"); // иккинчи видео ID
-        videoIds.add("Cne9F0kQ-p0");
-        videoIds.add("pMkOsVKT7jA");
-        videoIds.add("ZIXUZnzt8e4");
-        videoIds.add("CAORY3_3fDM");
-        videoIds.add("NhWq3F73UIE");
-        videoIds.add("jasOdSLBJo0");
-        videoIds.add("xOgCfMT6XfY");
-        videoIds.add("5qgwbHxe2PU");
-        videoIds.add("7xhcz_8P1I4");
-        videoIds.add("LiM8IXH5eWE");// учинчи видео ID
-        gestureDetector();
-
-//        youTubePlayerView = view.findViewById(R.id.youtube_player_view);
-//        initYouTubePlayerView();
-//        setUpRecyclerView();
-
-        db.collection("Shorts").orderBy("key").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                ArrayList<String> arrayMapList = (ArrayList<String>) document.get("key");
-                                for (Object transaction: arrayMapList) {
-                                    Map values = (Map)transaction;
-                                     nextArrayList.add((String) values.get("id"));
-                                }
-                            }
-                            Collections.shuffle( nextArrayList);
-//                            Log.d("demo1", "Map1 " + nextArrayList);
-                        } else {
-                            Log.d("demo1", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-
-
-        db.collection("main").document("WorkshopParent").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-//                        List<String> list = (ArrayList<String>) document.get("tagm");
-//                        nextArrayList = (ArrayList<String>) document.get("nature");
-
-//                        Log.d("demo24", String.valueOf(1));
-//
-                        Map<String, Object> map = document.getData();
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            if (entry.getKey().equals("workshopChild")) {
-                                Log.d("demo24", entry.getValue().toString());
-                               Log.d("demo24", entry.getKey().toString());
-                                Log.d("demo24", entry.getKey().toString());
-                            }
-//                            if (entry.getKey().trim().equals("workshopChild")) {
-//                                Log.d("demo24", entry.getValue().toString());
-//                            }
-                        }
-                    }
-                }
-            }
-
-        });
-
+        youTubePlayer();
+        nextArrayList();
 
         return view;
     }
+    private void nextArrayList() {
+        db.collection("Shorts").orderBy("key").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        ArrayList<String> arrayMapList = (ArrayList<String>) document.get("key");
+                        for (Object transaction: arrayMapList) {
+                            Map values = (Map)transaction;
+                            nextArrayList.add((String) values.get("id"));
+                        }
+                    }
+                    Collections.shuffle( nextArrayList);
+                } else {
+                }
+            }
+        });
+
+    }
 
 
-
-    private void gestureDetector() {
+    private void youTubePlayer() {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
+
+
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
                 HomeFragment.this.youTubePlayer = youTubePlayer;
                 loadVideo(currentVideoIndex);
-                Log.d("demo45", "youTubePlayerView: ready");
 
+//                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
+//                youTubePlayer.addListener(customPlayerUiController);
                 // GestureDetector инициализацияси
                 gestureDetector = new GestureDetector(requireActivity(), new GestureDetector.SimpleOnGestureListener() {
                     @Override
                     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                         Log.d("demo45", "onFling: ");
                         if (velocityY > 500) { // Pastga сурилганда
-                            nextVideo();
+                            previousVideo();
                             Toast.makeText(requireActivity(), "Кейинги видео", Toast.LENGTH_SHORT).show();
                         } else if (velocityY < -500) { // Yuqoriga сурилганда
-                            previousVideo();
+                            nextVideo();
                             Toast.makeText(requireActivity(), "Олдинги видео", Toast.LENGTH_SHORT).show();
                         }
                         return true;
@@ -179,29 +123,30 @@ public class HomeFragment extends Fragment  {
 
                 // onTouchListener ни тўғри қўллаш
                 frameLayout.setOnTouchListener((v, event) -> {
-                    Log.d("demo45", "Touch Event Detected: " + event.getAction()); // Текширув лог
                     gestureDetector.onTouchEvent(event);
                     return true; // Ҳаракатни қабул қилишини тасдиқлаш
                 });
+
             }
+
+
         });
 
-    }
 
+
+    }
 
 
 
     private void loadVideo(int index) {
-        Log.d("demo45", "loadVideo: ");
-        if (index >= 0 && index < videoIds.size()) {
-            String videoId = videoIds.get(index);
+        if (index >= 0 && index < nextArrayList.size()) {
+            String videoId = nextArrayList.get(index);
             youTubePlayer.loadVideo(videoId, 0);
+            Log.d("demo45", "videoId: " + videoId );
         }
     }
-
     private void nextVideo() {
-        Log.d("demo45", "nextVideo: ");
-        if (currentVideoIndex < videoIds.size() - 1) {
+        if (currentVideoIndex < nextArrayList.size() - 1) {
             currentVideoIndex++;
             loadVideo(currentVideoIndex);
         } else {
@@ -210,32 +155,55 @@ public class HomeFragment extends Fragment  {
     }
 
     private void previousVideo() {
-        Log.d("demo45", "previousVideo: ");
         if (currentVideoIndex > 0) {
             currentVideoIndex--;
             loadVideo(currentVideoIndex);
         }
     }
-
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        youTubePlayerView.release();
-//    }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+}
+
+
+
+//        youTubePlayerView = view.findViewById(R.id.youtube_player_view);
+//        initYouTubePlayerView();
+//        setUpRecyclerView();
 
 
 
 
-
-
+//        db.collection("main").document("WorkshopParent").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    if (document.exists()) {
+////                        List<String> list = (ArrayList<String>) document.get("tagm");
+////                        nextArrayList = (ArrayList<String>) document.get("nature");
+//
+////                        Log.d("demo24", String.valueOf(1));
+////
+//                        Map<String, Object> map = document.getData();
+//                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                            if (entry.getKey().equals("workshopChild")) {
+//                                Log.d("demo24", entry.getValue().toString());
+//                               Log.d("demo24", entry.getKey().toString());
+//                                Log.d("demo24", entry.getKey().toString());
+//                            }
+////                            if (entry.getKey().trim().equals("workshopChild")) {
+////                                Log.d("demo24", entry.getValue().toString());
+////                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//        });
 
 
 //
@@ -324,4 +292,3 @@ public class HomeFragment extends Fragment  {
 //    }
 
 
-}
