@@ -46,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment  {
-
+    private boolean isGoingForward = true; // Кейингига ўтиш ёки орқага қайтиш ҳолатини аниқлаш
     private int currentVideoIndex = 0;
     GestureDetector gestureDetector;
     YouTubePlayerView youTubePlayerView;
@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment  {
 
     private void youTubePlayer() {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//            View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
+            View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
 
 
             @SuppressLint("ClickableViewAccessibility")
@@ -104,8 +104,8 @@ public class HomeFragment extends Fragment  {
                 HomeFragment.this.youTubePlayer = youTubePlayer;
                 loadVideo(currentVideoIndex);
 
-//                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
-//                youTubePlayer.addListener(customPlayerUiController);
+                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
+                youTubePlayer.addListener(customPlayerUiController);
                 // GestureDetector инициализацияси
                 gestureDetector = new GestureDetector(requireActivity(), new GestureDetector.SimpleOnGestureListener() {
                     @Override
@@ -128,6 +128,21 @@ public class HomeFragment extends Fragment  {
                     return true; // Ҳаракатни қабул қилишини тасдиқлаш
                 });
 
+            }
+
+            @Override
+            public void onError(YouTubePlayer youTubePlayer, PlayerConstants.PlayerError error) {
+                // Агар хато юз берса, кейинги видеога ўтиш
+                if (error == PlayerConstants.PlayerError.VIDEO_NOT_PLAYABLE_IN_EMBEDDED_PLAYER) {
+                    Toast.makeText(requireActivity(), "Видео ўйнаш мумкин эмас, кейинги видео ўтказилмоқда", Toast.LENGTH_SHORT).show();
+                    if (isGoingForward) {
+                        // Агар кейинги видеога ўтиш вақтида хато бўлса
+                        nextVideo();
+                    } else {
+                        // Агар орқага қайтиш вақтида хато бўлса
+                        previousVideo();
+                    }
+                }
             }
 
             public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
@@ -161,10 +176,11 @@ public class HomeFragment extends Fragment  {
         if (index >= 0 && index < nextArrayList.size()) {
             String videoId = nextArrayList.get(index);
             youTubePlayer.loadVideo(videoId, 0);
-            Log.d("demo45", "videoId: " + videoId );
+            Log.d("demo45", "videoId: " + videoId + " " + nextArrayList );
         }
     }
     private void nextVideo() {
+        isGoingForward = true;
         if (currentVideoIndex < nextArrayList.size() - 1) {
             currentVideoIndex++;
             loadVideo(currentVideoIndex);
@@ -174,6 +190,7 @@ public class HomeFragment extends Fragment  {
     }
 
     private void previousVideo() {
+        isGoingForward = false;
         if (currentVideoIndex > 0) {
             currentVideoIndex--;
             loadVideo(currentVideoIndex);

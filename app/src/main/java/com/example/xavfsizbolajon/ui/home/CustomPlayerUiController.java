@@ -30,7 +30,7 @@ public class CustomPlayerUiController extends AbstractYouTubePlayerListener {
 
     @Override
     public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
-        playVideoAtSelection();
+//        playVideoAtSelection();
         if (state == PlayerConstants.PlayerState.PLAYING || state == PlayerConstants.PlayerState.PAUSED || state == PlayerConstants.PlayerState.VIDEO_CUED)
             panel.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent));
         else if (state == PlayerConstants.PlayerState.BUFFERING)
