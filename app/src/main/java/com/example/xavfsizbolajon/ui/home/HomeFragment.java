@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
@@ -129,6 +130,12 @@ public class HomeFragment extends Fragment  {
 
             }
 
+            public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
+                if (state == PlayerConstants.PlayerState.ENDED) {
+                    // Видео тугаганда қайта ўйнатиш
+                    playVideoAtSelection();
+                }
+            }
 
         });
 
@@ -136,7 +143,19 @@ public class HomeFragment extends Fragment  {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (youTubePlayer != null && currentVideoIndex >= 0) {
+            youTubePlayer.play(); // Иловадан қайтиб кирганингизда видеони ўйнашни бошлаш
+        }
+    }
 
+    private void playVideoAtSelection() {
+        if (!(youTubePlayer == null)) {
+            youTubePlayer.play();
+        }
+    }
 
     private void loadVideo(int index) {
         if (index >= 0 && index < nextArrayList.size()) {
