@@ -24,6 +24,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
     }
     compileOptions {
@@ -55,7 +56,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics")
 
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.1")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.30")
 
 // FirestoreRecyclerOptions
     implementation ("com.google.firebase:firebase-firestore:17.0.4")
@@ -64,5 +66,7 @@ dependencies {
 
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+
 
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,9 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFragment extends Fragment  {
+    private SeekBar customSeekBar;
+    private float videoDuration;  // Видео умумий давомийлиги
+    View view;
     private boolean isGoingForward = true; // Кейингига ўтиш ёки орқага қайтиш ҳолатини аниқлаш
     private int currentVideoIndex = 0;
     GestureDetector gestureDetector;
@@ -64,6 +68,7 @@ public class HomeFragment extends Fragment  {
 
         frameLayout = view.findViewById(R.id.frame_layout);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
+        customSeekBar = view.findViewById(R.id.customSeekBar);
         getLifecycle().addObserver(youTubePlayerView);
 
         youTubePlayer();
@@ -95,7 +100,7 @@ public class HomeFragment extends Fragment  {
 
     private void youTubePlayer() {
         youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
+//            View customPlayerUi = youTubePlayerView.inflateCustomPlayerUi(R.layout.layout_panel);
 
 
             @SuppressLint("ClickableViewAccessibility")
@@ -104,8 +109,47 @@ public class HomeFragment extends Fragment  {
                 HomeFragment.this.youTubePlayer = youTubePlayer;
                 loadVideo(currentVideoIndex);
 
-                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
-                youTubePlayer.addListener(customPlayerUiController);
+                customSeekBar.setMax(100);
+                // Видео умумий давомийлигини оламиз
+                youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onVideoDuration(YouTubePlayer youTubePlayer, float duration) {
+                        videoDuration = duration;
+                    }
+
+                    @Override
+                    public void onCurrentSecond(YouTubePlayer youTubePlayer, float second) {
+                        // Видео пайтига қараб SeekBar'ни янгилаймиз
+                        if (videoDuration > 0) {
+                            customSeekBar.setProgress((int) (second / videoDuration * 100));
+                        }
+                    }
+                });
+
+                // SeekBar'га ўзгартириш киритилганда видеонинг вақтини ўзгартириш
+                customSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        if (fromUser) {
+                            // Фойдаланувчи қўлда видеонинг вақтига ўтишда SeekBar'ни янгилайди
+                            float seekTo = (progress / 100f) * videoDuration;
+                            youTubePlayer.seekTo(seekTo);
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        // Ҳеч нарса қўшилмайди
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        // Ҳеч нарса қўшилмайди
+                    }
+                });
+
+//                CustomPlayerUiController customPlayerUiController = new CustomPlayerUiController(requireContext(), customPlayerUi, youTubePlayer, youTubePlayerView);
+//                youTubePlayer.addListener(customPlayerUiController);
                 // GestureDetector инициализацияси
                 gestureDetector = new GestureDetector(requireActivity(), new GestureDetector.SimpleOnGestureListener() {
                     @Override
@@ -123,6 +167,7 @@ public class HomeFragment extends Fragment  {
                 });
 
                 // onTouchListener ни тўғри қўллаш
+
                 frameLayout.setOnTouchListener((v, event) -> {
                     gestureDetector.onTouchEvent(event);
                     return true; // Ҳаракатни қабул қилишини тасдиқлаш
