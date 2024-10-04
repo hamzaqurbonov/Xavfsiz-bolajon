@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment  {
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
 
+    ImageView play, stop;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -69,10 +72,14 @@ public class HomeFragment extends Fragment  {
         frameLayout = view.findViewById(R.id.frame_layout);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         customSeekBar = view.findViewById(R.id.customSeekBar);
+        play = view.findViewById(R.id.play);
+        stop = view.findViewById(R.id.stop);
         getLifecycle().addObserver(youTubePlayerView);
 
         youTubePlayer();
         nextArrayList();
+        play();
+        stop();
 
         return view;
     }
@@ -201,6 +208,27 @@ public class HomeFragment extends Fragment  {
 
 
 
+    }
+
+    private void play() {
+      play.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              stop.setVisibility(View.VISIBLE);
+              play.setVisibility(View.GONE);
+              youTubePlayer.play();
+          }
+      });
+    }
+    private void stop() {
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stop.setVisibility(View.GONE);
+                play.setVisibility(View.VISIBLE);
+                youTubePlayer.pause();
+            }
+        });
     }
 
     @Override
