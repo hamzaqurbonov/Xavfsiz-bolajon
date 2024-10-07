@@ -42,6 +42,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -115,6 +117,25 @@ public class HomeFragment extends Fragment  {
             public void onReady(YouTubePlayer youTubePlayer) {
                 HomeFragment.this.youTubePlayer = youTubePlayer;
                 loadVideo(currentVideoIndex);
+
+//                youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+//                    @Override
+//                    public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
+//                        // Видео тугаганда плеерни тўхтатиш
+//                        if (state == PlayerConstants.PlayerState.ENDED) {
+//                            youTubePlayer.pause();  // Видео тугаганда тўхтатиш
+//                            // Бу ерда реклама чиқишини тўхтатиш учун
+//                            play.setVisibility(View.VISIBLE);  // Пауза тугмасига алмаштириш
+//                            stop.setVisibility(View.GONE);     // Тўхтатиш тугмасини ёпиш
+//                        }
+//
+//                        // Видео тўхтатилганда реклама чиқмаслиги учун
+//                        if (state == PlayerConstants.PlayerState.PAUSED) {
+//                            youTubePlayer.pause();  // Паузада тўхтатиш
+//                            play.setVisibility(View.VISIBLE); // Пауза тугмасини кўрсатиш
+//                        }
+//                    }
+//                });
 
                 customSeekBar.setMax(100);
                 // Видео умумий давомийлигини оламиз
@@ -202,7 +223,9 @@ public class HomeFragment extends Fragment  {
                     // Видео тугаганда қайта ўйнатиш
                     playVideoAtSelection();
                 }
+
             }
+
 
         });
 
@@ -226,7 +249,7 @@ public class HomeFragment extends Fragment  {
             public void onClick(View v) {
                 stop.setVisibility(View.GONE);
                 play.setVisibility(View.VISIBLE);
-                youTubePlayer.pause();
+                youTubePlayer.pause(); // Пауза қўйилади
             }
         });
     }

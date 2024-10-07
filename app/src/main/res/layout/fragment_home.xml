@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,48 +14,47 @@
         android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="92dp" />
+        tools:layout_editor_absoluteY="92dp" >
+    </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/customSeekBar"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@android:color/transparent" />
+    <!--    &lt;!&ndash; YouTubePlayerSeekBar &ndash;&gt;-->
+<!--    <SeekBar-->
+<!--        android:id="@+id/customSeekBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="41.5dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <!-- YouTubePlayerSeekBar -->
-    <SeekBar
-        android:id="@+id/customSeekBar"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="41.5dp"
+        android:layout_height="40dp"
+        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/play"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/play_circle_24px"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customSeekBar"
-        android:visibility="gone"/>
-    <ImageView
-        android:id="@+id/stop"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/stop_circle_24px"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/customSeekBar"
-        android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/play"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/play_circle_24px"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/stop"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/stop_circle_24px"
+            android:visibility="visible" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
