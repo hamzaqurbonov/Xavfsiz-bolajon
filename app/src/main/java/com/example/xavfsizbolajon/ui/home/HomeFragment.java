@@ -65,12 +65,14 @@ public class HomeFragment extends Fragment  {
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
 
     ImageView play, stop;
+    View customOverlay;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+//        customOverlay = view.findViewById(R.id.customOverlay);
         frameLayout = view.findViewById(R.id.frame_layout);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         customSeekBar = view.findViewById(R.id.customSeekBar);
@@ -117,25 +119,6 @@ public class HomeFragment extends Fragment  {
             public void onReady(YouTubePlayer youTubePlayer) {
                 HomeFragment.this.youTubePlayer = youTubePlayer;
                 loadVideo(currentVideoIndex);
-
-//                youTubePlayer.addListener(new AbstractYouTubePlayerListener() {
-//                    @Override
-//                    public void onStateChange(@NonNull YouTubePlayer youTubePlayer, @NonNull PlayerConstants.PlayerState state) {
-//                        // Видео тугаганда плеерни тўхтатиш
-//                        if (state == PlayerConstants.PlayerState.ENDED) {
-//                            youTubePlayer.pause();  // Видео тугаганда тўхтатиш
-//                            // Бу ерда реклама чиқишини тўхтатиш учун
-//                            play.setVisibility(View.VISIBLE);  // Пауза тугмасига алмаштириш
-//                            stop.setVisibility(View.GONE);     // Тўхтатиш тугмасини ёпиш
-//                        }
-//
-//                        // Видео тўхтатилганда реклама чиқмаслиги учун
-//                        if (state == PlayerConstants.PlayerState.PAUSED) {
-//                            youTubePlayer.pause();  // Паузада тўхтатиш
-//                            play.setVisibility(View.VISIBLE); // Пауза тугмасини кўрсатиш
-//                        }
-//                    }
-//                });
 
                 customSeekBar.setMax(100);
                 // Видео умумий давомийлигини оламиз
@@ -223,6 +206,15 @@ public class HomeFragment extends Fragment  {
                     // Видео тугаганда қайта ўйнатиш
                     playVideoAtSelection();
                 }
+//                if (state.equals(PlayerConstants.PlayerState.PAUSED)) {
+//                    // Паузада overlay ёки маска кўрсатиш
+//                    Log.d("demo45", "customOverlay VISIBLE: ");
+//                    customOverlay.setVisibility(View.VISIBLE);
+//                } else if (state.equals(PlayerConstants.PlayerState.PLAYING)) {
+//                    // Видео ўйнаб турганда overlay ёки маскани олиб ташлаш
+//                    Log.d("demo45", "customOverlay GONE:: ");
+//                    customOverlay.setVisibility(View.GONE);
+//                }
 
             }
 
