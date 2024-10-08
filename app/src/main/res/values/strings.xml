@@ -1,4 +1,13 @@
 <resources>
+    <string-array name="options_array">
+        <item>Брендлар</item>
+        <item>Гардероб</item>
+        <item>Магазинлар</item>
+        <item>СПА</item>
+        <item>Косметика</item>
+        <item>Парфюмерия</item>
+    </string-array>
+
     <string name="app_name">Xavfsiz bolajon</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

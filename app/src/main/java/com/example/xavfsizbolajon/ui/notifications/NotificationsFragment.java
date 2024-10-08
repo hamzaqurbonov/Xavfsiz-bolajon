@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,19 +36,52 @@ public class NotificationsFragment extends Fragment {
     public List<String> activityllist = new ArrayList<>();
     EditText edit_short_id;
     Button add_button;
+    Spinner spinner;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-
+        spinner = view.findViewById(R.id.spinner);
         edit_short_id = view.findViewById(R.id.edit_short_id);
         add_button = view.findViewById(R.id.add_button);
 
         AddButton();
+        spinner();
 
 
         return view;
     }
+
+    public void spinner() {
+
+        String sss = "ssss";
+        // Массивни адаптерга юклаш
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.options_array, android.R.layout.simple_spinner_item);
+
+// Тушириладиган рўйхатнинг услубини белгилаш
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// Spinner'га адаптерни ўрнатиш
+        spinner.setAdapter(adapter);
+
+// Танланган элементни кузатиш
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                // Танланган элементни олиш
+                String selectedOption = parentView.getItemAtPosition(position).toString();
+                Toast.makeText(getActivity(), "Tanlangan: " + selectedOption, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Хеч нарса танланмаса (ўрнатилган ҳолат)
+            }
+        });
+    }
+
+
 
     public void AddButton() {
         add_button.setOnClickListener(new View.OnClickListener() {
