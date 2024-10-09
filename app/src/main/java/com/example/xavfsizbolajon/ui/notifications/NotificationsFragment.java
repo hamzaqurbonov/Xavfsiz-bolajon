@@ -34,6 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,8 +88,10 @@ public class NotificationsFragment extends Fragment {
 
     public void Spinner() {
         // Массивни адаптерга юклаш
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),  android.R.layout.simple_spinner_item , activityllist);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),  android.R.layout.simple_spinner_item , activityllist);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // spinnerни техт каттароқ қилиш учун CustomSpinnerAdapter класси яратилди
+        CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(getActivity(), activityllist, R.layout.spinner_item);
         spinner.setAdapter(adapter);
         Log.d("demo46", "activityllist "  + activityllist);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,8 +112,9 @@ public class NotificationsFragment extends Fragment {
         // spinner_young ga tegishli
         String[] spinner_young_list = {"1", "2", "3", "4", "5"};
 
-        ArrayAdapter<String> adapter_young = new ArrayAdapter<>(getActivity(),  android.R.layout.simple_spinner_item , spinner_young_list);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ArrayAdapter<String> adapter_young = new ArrayAdapter<>(getActivity(),  android.R.layout.simple_spinner_item , spinner_young_list);
+        CustomSpinnerAdapter adapter_young = new CustomSpinnerAdapter(getActivity(), Arrays.asList(spinner_young_list),  R.layout.spinner_number_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_young.setAdapter(adapter_young);
         Log.d("demo46", "activityllist "  + activityllist);
         spinner_young.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
