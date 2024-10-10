@@ -1,6 +1,7 @@
 package com.example.xavfsizbolajon.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment  {
 
     ImageView play, stop;
     View customOverlay;
-
+    String oldID;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -79,6 +80,13 @@ public class HomeFragment extends Fragment  {
         play = view.findViewById(R.id.play);
         stop = view.findViewById(R.id.stop);
         getLifecycle().addObserver(youTubePlayerView);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            oldID = bundle.getString("old_id");
+            // Олган қийматдан фойдаланиш
+            Log.d("demo47", "Fragment ID: " + oldID);
+        }
 
         youTubePlayer();
         nextArrayList();

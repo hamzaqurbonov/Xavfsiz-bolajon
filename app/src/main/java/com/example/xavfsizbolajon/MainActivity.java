@@ -3,6 +3,7 @@ package com.example.xavfsizbolajon;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.xavfsizbolajon.ui.dashboard.DashboardFragment;
 import com.example.xavfsizbolajon.ui.home.HomeFragment;
@@ -13,62 +14,64 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-//import com.google.firebase.database.ChildEventListener;
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-
-
 public class MainActivity extends AppCompatActivity {
-
-    private static final String PREFS_NAME = "MyPrefsFile";
-    private static final String FIRST_TIME_KEY = "firstTime";
-
+    String oldID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+//        if (getIntent().getExtras() != null) {
+//            getIntent().removeExtra("old_id");
+//            getIntent().replaceExtras(new Bundle());  // Мавжуд Bundle ни янги бўш Bundle билан алмаштириш
+//            Log.d("demo47", "onCreate: getIntent() " + getIntent());
+//        }
 
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        boolean firstTime = settings.getBoolean(FIRST_TIME_KEY, true);
+        Bundle extras = getIntent().getExtras();
+        Log.d("demo47", "onCreate: extras " + extras);
+        if (extras != null) {
+            oldID = extras.getString("old_id");
+            Bundle doc = new Bundle();
+            doc.putString("old_id", oldID);
 
-        if (firstTime) {
-            // Агар биринчи марта очилган бўлса, интро ёки маълумот экранини кўрсатиш
-            Intent intent = new Intent(this, IntroActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            // Агар аввал очилган бўлса, тўғридан-тўғри асосий экранга ўтиш
+            Fragment myFragment = new HomeFragment();
+            myFragment.setArguments(doc);  // Fragment'га маълумотни юбориш
+            getSupportFragmentManager().beginTransaction()
+            .replace(R.id.body_container, myFragment)
+            .commit();
+
+
+            Log.d("demo47", "onCreate: if " + oldID);
             setContentView(R.layout.activity_main);
             BottomNavigationView bottomNav = findViewById(R.id.botton_navigation);
             bottomNav.setOnNavigationItemSelectedListener(navListener);
             getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
 
+
+
+        } else  {
+            Intent intent = new Intent(this, IntroActivity.class);
+//            Bundle doc = new Bundle();
+//            doc.putString("old_id", oldID);
+
+            startActivity(intent);
+            Log.d("demo47", "onCreate: else " + oldID);
         }
 
+
+
     }
-
-
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
-        // By using switch we can easily get
-        // the selected fragment
-        // by using there id.
+
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
         if (itemId == R.id.nav_main) {
             selectedFragment = new HomeFragment();
-
         } else if (itemId == R.id.nav_live) {
             selectedFragment = new DashboardFragment();
-
         } else if (itemId == R.id.nav_favorite) {
             selectedFragment = new NotificationsFragment();
-
         }
-        // It will help to replace the
-        // one fragment to other.
         if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.body_container, selectedFragment).commit();
         }
