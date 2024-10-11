@@ -10,66 +10,50 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.xavfsizbolajon.MainActivity;
 import com.example.xavfsizbolajon.R;
+import com.example.xavfsizbolajon.ui.dashboard.DashboardFragment;
+import com.example.xavfsizbolajon.ui.notifications.NotificationsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class IntroActivity extends AppCompatActivity {
-
-//    private static final String PREFS_NAME = "MyPrefsFile";
-//    private static final String FIRST_TIME_KEY = "firstTime";
-    Bundle doc = new Bundle();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_intro);
+//        EdgeToEdge.enable(this);
+        Bundle extras = getIntent().getExtras();
+        String  oldID = extras.getString("old_id");
+        Bundle doc = new Bundle();
+        doc.putString("old_id", oldID);
 
-        findViewById(R.id.old_2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                doc.putString("old_id", "2");
-                intent.putExtras(doc);
-                startActivity(intent);
-                finish();
-            }
-        });
+        Fragment myFragment = new HomeFragment();
+        myFragment.setArguments(doc);  // Fragment'га маълумотни юбориш
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.body_container, myFragment)
+                .commit();
 
-        findViewById(R.id.old_3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                doc.putString("old_id", "3");
-                intent.putExtras(doc);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        findViewById(R.id.old_4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                doc.putString("old_id", "4");
-                intent.putExtras(doc);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        findViewById(R.id.old_5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                doc.putString("old_id", "5");
-                intent.putExtras(doc);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
+        setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNav = findViewById(R.id.botton_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
     }
+
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
+
+        Fragment selectedFragment = null;
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_main) {
+            selectedFragment = new HomeFragment();
+        } else if (itemId == R.id.nav_live) {
+            selectedFragment = new DashboardFragment();
+        } else if (itemId == R.id.nav_favorite) {
+            selectedFragment = new NotificationsFragment();
+        }
+        if (selectedFragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.body_container, selectedFragment).commit();
+        }
+        return true;
+    };
 }
