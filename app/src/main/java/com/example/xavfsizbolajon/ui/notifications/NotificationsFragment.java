@@ -178,7 +178,7 @@ public class NotificationsFragment extends Fragment {
                 // Map яратиш
                 nestedData.put("url", edit_short_id.getText().toString());
                 nestedData.put("id",   videoId);
-                nestedData.put("youngNumber",  youngNumber);
+                nestedData.put("youngNumber", Integer.parseInt( youngNumber));
 
                 // arrey орқали сақлаш
                 DocumentReference Data = db.collection("Shorts").document(DocName);

@@ -47,6 +47,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,12 +108,51 @@ public class HomeFragment extends Fragment  {
                             Map values = (Map)transaction;
                             nextArrayList.add((String) values.get("id"));
                         }
+
+
                     }
+                    Log.d("demo47", "Fragment ID: " + nextArrayList);
                     Collections.shuffle( nextArrayList);
                 } else {
                 }
             }
         });
+
+        db.collection("Shorts").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // "key" массивини оламиз
+                                List<Map<String, Object>> keys = (List<Map<String, Object>>) document.get("key");
+
+                                // Массив ичидаги youngNumber бўйича фильтрлаш
+                                for (Map<String, Object> key : keys) {
+//                                    long youngNumber = (long) key.get("youngNumber"); // youngNumberни оламиз
+
+//                                    if (youngNumber ==  2) { // youngNumber 0 дан катта бўлса
+//                                        Log.d("demo47", "Found: " + key.get("id")); // Мос келганларини логга чиқарамиз
+//                                    }
+                                    Object youngNumberObj = key.get("youngNumber");
+                                    if (youngNumberObj != null) {
+                                        long youngNumber = (long) youngNumberObj; // youngNumber ни олдик
+                                        if (youngNumber == 0) { // youngNumber 0 дан катта бўлса
+                                            Log.d("demo47", "Found: " + key.toString());
+                                        }
+                                    } else {
+                                        Log.w("demo47", "youngNumber null, текширинг: " + key.toString());
+                                    }
+
+
+                                }
+                            }
+                        } else {
+                            Log.w("demo47", "Маълумот олишда хато юз берди.", task.getException());
+                        }
+                    }
+                });
+
 
     }
 
