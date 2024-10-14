@@ -110,7 +110,7 @@ public class NotificationsFragment extends Fragment {
         });
 
         // spinner_young ga tegishli
-        String[] spinner_young_list = {"1", "2", "3", "4", "5"};
+        String[] spinner_young_list = {"2", "3", "4", "5"};
 
 //        ArrayAdapter<String> adapter_young = new ArrayAdapter<>(getActivity(),  android.R.layout.simple_spinner_item , spinner_young_list);
         CustomSpinnerAdapter adapter_young = new CustomSpinnerAdapter(getActivity(), Arrays.asList(spinner_young_list),  R.layout.spinner_number_item);

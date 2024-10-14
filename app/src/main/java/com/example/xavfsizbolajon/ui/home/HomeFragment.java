@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.xavfsizbolajon.MainActivity;
 import com.example.xavfsizbolajon.R;
 import com.example.xavfsizbolajon.databinding.FragmentHomeBinding;
 
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment  {
 
     public  static ArrayList<String> nextArrayList = new ArrayList<>();
 
-    ImageView play, stop;
+    ImageView play, stop, old ;
     View customOverlay;
     String oldID;
 
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment  {
         customSeekBar = view.findViewById(R.id.customSeekBar);
         play = view.findViewById(R.id.play);
         stop = view.findViewById(R.id.stop);
+        old = view.findViewById(R.id.old);
         getLifecycle().addObserver(youTubePlayerView);
 
         Bundle bundle = getArguments();
@@ -93,30 +95,46 @@ public class HomeFragment extends Fragment  {
         nextArrayList();
         play();
         stop();
+        Old();
 
         return view;
     }
-    private void nextArrayList() {
-        db.collection("Shorts").orderBy("key").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void Old() {
+        old.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-
-                        ArrayList<String> arrayMapList = (ArrayList<String>) document.get("key");
-                        for (Object transaction: arrayMapList) {
-                            Map values = (Map)transaction;
-                            nextArrayList.add((String) values.get("id"));
-                        }
-
-
-                    }
-                    Log.d("demo47", "Fragment ID: " + nextArrayList);
-                    Collections.shuffle( nextArrayList);
-                } else {
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                nextArrayList.clear();
+                Log.d("demo47", "nextArrayList ID: " + nextArrayList);
             }
         });
+    }
+
+
+    private void nextArrayList() {
+        // Birinchi holati ishlaydi Arreyni shakillantirib beradi
+
+//        db.collection("Shorts").orderBy("key").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//
+//                        ArrayList<String> arrayMapList = (ArrayList<String>) document.get("key");
+//                        for (Object transaction: arrayMapList) {
+//                            Map values = (Map)transaction;
+//                            nextArrayList.add((String) values.get("id"));
+//                        }
+//
+//
+//                    }
+//                    Log.d("demo47", "Fragment ID: " + nextArrayList);
+//                    Collections.shuffle( nextArrayList);
+//                } else {
+//                }
+//            }
+//        });
 
         db.collection("Shorts").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -135,18 +153,27 @@ public class HomeFragment extends Fragment  {
 //                                        Log.d("demo47", "Found: " + key.get("id")); // Мос келганларини логга чиқарамиз
 //                                    }
                                     Object youngNumberObj = key.get("youngNumber");
-                                    if (youngNumberObj != null) {
-                                        long youngNumber = (long) youngNumberObj; // youngNumber ни олдик
-                                        if (youngNumber == 0) { // youngNumber 0 дан катта бўлса
-                                            Log.d("demo47", "Found: " + key.toString());
+                                    if (youngNumberObj != null && !youngNumberObj.toString().isEmpty()) {
+                                        try {
+                                            // Агар youngNumber String бўлса, уни long га айлантирамиз
+                                            long youngNumber = Long.parseLong(youngNumberObj.toString());
+
+                                            if (youngNumber == Integer.parseInt(oldID)) {
+
+                                                nextArrayList.add((String) key.get("id"));
+                                                Log.d("demo47", "Found: " + key.get("id"));
+                                            }
+                                        } catch (NumberFormatException e) {
+//                                            Log.e("demo47", "Маълумотни long га айлантиришда хато: " + youngNumberObj.toString());
                                         }
                                     } else {
-                                        Log.w("demo47", "youngNumber null, текширинг: " + key.toString());
+                                        Log.w("demo47", "youngNumber null ёки бўш, текширинг: " + key.toString());
                                     }
 
 
                                 }
                             }
+                            Collections.shuffle( nextArrayList);
                         } else {
                             Log.w("demo47", "Маълумот олишда хато юз берди.", task.getException());
                         }
