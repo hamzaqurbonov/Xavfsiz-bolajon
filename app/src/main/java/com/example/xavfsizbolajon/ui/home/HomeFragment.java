@@ -75,13 +75,15 @@ public class HomeFragment extends Fragment  {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
+
 //        customOverlay = view.findViewById(R.id.customOverlay);
         frameLayout = view.findViewById(R.id.frame_layout);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
         customSeekBar = view.findViewById(R.id.customSeekBar);
         play = view.findViewById(R.id.play);
         stop = view.findViewById(R.id.stop);
-        old = view.findViewById(R.id.old);
+//        old = view.findViewById(R.id.old);
         getLifecycle().addObserver(youTubePlayerView);
 
         Bundle bundle = getArguments();
@@ -95,7 +97,7 @@ public class HomeFragment extends Fragment  {
         nextArrayList();
         play();
         stop();
-        Old();
+//        Old();
 
         return view;
     }
@@ -141,6 +143,7 @@ public class HomeFragment extends Fragment  {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+//                            nextArrayList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // "key" массивини оламиз
                                 List<Map<String, Object>> keys = (List<Map<String, Object>>) document.get("key");

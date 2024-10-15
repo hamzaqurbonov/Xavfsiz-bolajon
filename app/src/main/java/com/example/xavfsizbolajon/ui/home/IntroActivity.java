@@ -50,8 +50,10 @@ public class IntroActivity extends AppCompatActivity {
             selectedFragment = new DashboardFragment();
         } else if (itemId == R.id.nav_favorite) {
             selectedFragment = new NotificationsFragment();
-        }
-        if (selectedFragment != null) {
+        } else if (itemId == R.id.nav_old) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        } if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.body_container, selectedFragment).commit();
         }
         return true;
