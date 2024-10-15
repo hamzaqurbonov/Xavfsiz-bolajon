@@ -15,13 +15,13 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:background="@drawable/round_corner"
-        android:elevation="2dp"
-        app:itemIconSize="30dp"
-        android:tint="@null"
-        app:itemIconTint="@drawable/item_selector"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled"
+        android:background="@color/black"
+        app:itemTextColor="@color/white"
+        app:itemIconSize="35dp"
+        app:itemIconTint="@color/teal_200"
+        app:labelVisibilityMode="labeled"
+        app:elevation="0dp"
+
         app:menu="@menu/bottom_nav_menu"/>
 
 </RelativeLayout>

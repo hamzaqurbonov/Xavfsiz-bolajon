@@ -19,6 +19,7 @@ import com.example.xavfsizbolajon.ui.notifications.NotificationsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class IntroActivity extends AppCompatActivity {
+    HomeFragment homeFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class IntroActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.botton_navigation);
+        bottomNav.setItemIconTintList(null);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
     }
@@ -52,6 +54,7 @@ public class IntroActivity extends AppCompatActivity {
             selectedFragment = new NotificationsFragment();
         } else if (itemId == R.id.nav_old) {
             Intent intent = new Intent(this,MainActivity.class);
+            homeFragment.nextArrayList.clear();
             startActivity(intent);
         } if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.body_container, selectedFragment).commit();

@@ -5,21 +5,22 @@
 
     <item
         android:id="@+id/nav_main"
-        android:icon="@drawable/common_full_open_on_phone"
+
         android:title="@string/main_text" />
+<!--    android:icon="@drawable/ic_home_black_24dp"-->
     <item
         android:id="@+id/nav_old"
         android:icon="@drawable/hafsizbolajon"
-        android:title="@string/favorite_text" />
+        android:title="" />
 
     <item
         android:id="@+id/nav_live"
-        android:icon="@drawable/common_full_open_on_phone"
+
         android:title="@string/live_text" />
 
     <item
         android:id="@+id/nav_favorite"
-        android:icon="@drawable/common_full_open_on_phone"
+
         android:title="@string/favorite_text" />
 
 

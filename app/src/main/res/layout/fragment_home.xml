@@ -14,6 +14,7 @@
         android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="92dp" >
     </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>

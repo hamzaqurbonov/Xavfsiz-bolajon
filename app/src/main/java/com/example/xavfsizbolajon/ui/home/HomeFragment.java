@@ -244,11 +244,13 @@ public class HomeFragment extends Fragment  {
                     @Override
                     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                         Log.d("demo45", "onFling: ");
-                        if (velocityY > 500) { // Pastga сурилганда
+                        if (velocityY > 800) { // Pastga сурилганда
                             previousVideo();
+                            Log.d("demo45", "onFling: " + velocityY);
                             Toast.makeText(requireActivity(), "Кейинги видео", Toast.LENGTH_SHORT).show();
-                        } else if (velocityY < -500) { // Yuqoriga сурилганда
+                        } else if (velocityY < -800) { // Yuqoriga сурилганда
                             nextVideo();
+                            Log.d("demo45", "onFling: " + velocityY);
                             Toast.makeText(requireActivity(), "Олдинги видео", Toast.LENGTH_SHORT).show();
                         }
                         return true;

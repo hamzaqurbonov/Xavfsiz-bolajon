@@ -1,7 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.XavfsizBolajon" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <style name="Theme.XavfsizBolajon" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
+
+        <item name="colorControlNormal">@null</item>
+
         <item name="colorPrimary">@color/purple_200</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/black</item>
