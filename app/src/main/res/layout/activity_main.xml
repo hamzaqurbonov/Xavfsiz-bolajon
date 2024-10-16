@@ -16,12 +16,17 @@
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:background="@color/black"
-        app:itemTextColor="@color/white"
+        app:itemTextColor="@color/color_selector"
         app:itemIconSize="35dp"
-        app:itemIconTint="@color/teal_200"
         app:labelVisibilityMode="labeled"
-        app:elevation="0dp"
+        app:itemRippleColor="@color/ripple_selector"
+        app:itemTextAppearanceActive="@style/TextAppearance.BottomNavigationView"
+        app:itemTextAppearanceInactive="@style/TextAppearance.BottomNavigationView"
+
 
         app:menu="@menu/bottom_nav_menu"/>
 
 </RelativeLayout>
+
+<!--    app:itemIconTint="@color/color_selector"-->
+<!--    app:itemBackground="@drawable/item_background"-->

@@ -12,8 +12,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="main_text">Main</string>
-    <string name="live_text">Live</string>
-    <string name="favorite_text">Favorite</string>
+    <string name="main_text">MAIN</string>
+    <string name="live_text">LIVE</string>
+    <string name="favorite_text">FAVORITE</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

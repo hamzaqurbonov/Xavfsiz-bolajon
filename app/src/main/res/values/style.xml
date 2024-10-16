@@ -7,6 +7,11 @@
         <item name="cornerSizeBottomRight">0dp</item>
     </style>
 
+    <style name="TextAppearance.BottomNavigationView" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+
 
 
 </resources>
