@@ -5,22 +5,25 @@
 
     <item
         android:id="@+id/nav_main"
-        android:title="@string/main_text" />
+        android:icon="@drawable/rapunzel"
+        android:title="ASOSIY" />
 <!--    android:icon="@drawable/ic_home_black_24dp"-->
 
 
     <item
         android:id="@+id/nav_live"
-        android:title="@string/live_text" />
+        android:icon="@drawable/car_icon"
+        android:title="Multfilm" />
 
     <item
         android:id="@+id/nav_favorite"
-        android:title="@string/favorite_text" />
+        android:icon="@drawable/horse"
+        android:title="Sevimli" />
 
     <item
         android:id="@+id/nav_old"
-        android:icon="@drawable/hafsizbolajon"
-        android:title="" />
+        android:icon="@drawable/hafsizbolajon_icon"
+        android:title="YOSH" />
 
 
 </menu>

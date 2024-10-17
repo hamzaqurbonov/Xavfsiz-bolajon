@@ -56,6 +56,7 @@ public class IntroActivity extends AppCompatActivity {
             Intent intent = new Intent(this,MainActivity.class);
             homeFragment.nextArrayList.clear();
             startActivity(intent);
+            finish();
         } if (selectedFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.body_container, selectedFragment).commit();
         }
