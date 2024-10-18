@@ -4,16 +4,25 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class NotificationsViewModel  {
+    int Id;
+    String  vieoId, videoName;
 
-    private final MutableLiveData<String> mText;
-
-    public NotificationsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+    public NotificationsViewModel(int id, String vieoId, String videoName) {
+        this.Id = id;
+        this.vieoId = vieoId;
+        this.videoName = videoName;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public int getId() {
+        return Id;
+    }
+
+    public String getVieoId() {
+        return vieoId;
+    }
+
+    public String getVideoName() {
+        return videoName;
     }
 }

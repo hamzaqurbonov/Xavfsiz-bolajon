@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,59 +8,58 @@
     android:background="@color/white"
     tools:context=".ui.notifications.NotificationsFragment">
 
-
-    <Spinner
-        android:id="@+id/spinner_young"
-        android:layout_width="wrap_content"
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="60dp"
+        app:enableAutomaticInitialization="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="100dp"
         app:counterEnabled="true"
+
         app:endIconMode="clear_text"
         app:helperTextTextColor="#125AEA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/add_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_young">
+        app:layout_constraintTop_toBottomOf="@+id/youtube_player_view">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_short_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="short url" />
+            android:textStyle="italic"
+            android:textSize="14dp"
+            android:hint="Youtube linkini to'lliq kiriting!" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Қўшиш"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
+        android:text="Қўшиш"
         android:textColor="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/youtube_player_view" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNotic"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fadeScrollbars="true"
+        android:scrollbarThumbVertical="@drawable/square_24px"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name_input" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/edit_name_input"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
