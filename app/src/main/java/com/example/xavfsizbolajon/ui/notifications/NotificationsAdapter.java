@@ -1,6 +1,7 @@
 package com.example.xavfsizbolajon.ui.notifications;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.xavfsizbolajon.R;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     private ArrayList<NotificationsViewModel> modalArrayList;
     private Context context;
     private OnItemClickListener listener;
+    private SparseArray<YouTubePlayer> youTubePlayerArray = new SparseArray<>();
     DbFavorite dbFavorite;
 
     public NotificationsAdapter(ArrayList<NotificationsViewModel> modalArrayList, Context context) {
@@ -61,11 +64,13 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     // Videoni cueVideo yordamida tayyorlab qo'yamiz, avtomatik o'ynatmaslik uchun
-                    youTubePlayer.cueVideo(viewModel.getVieoId(), 0);
+                    youTubePlayer.loadVideo(viewModel.getVieoId(), 0);
+                    youTubePlayerArray.put(position, youTubePlayer);
                 }
-            });
-            holder.isPlayerInitialized = true; // Инициализация қилинди деб белгиланади
+            }, true, new IFramePlayerOptions.Builder().controls(0).build());
+            holder.isPlayerInitialized = true; // Инициализация қилинди деб белгиланади/
         }
+
 
 
 
@@ -79,6 +84,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         });
 
     }
+
+
 
 
     void Refresh(ArrayList<NotificationsViewModel> events) {

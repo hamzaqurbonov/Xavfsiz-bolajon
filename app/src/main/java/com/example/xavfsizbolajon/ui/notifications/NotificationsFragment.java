@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class NotificationsFragment extends Fragment {
     FragmentNotificationsBinding binding;
 
     NotificationsAdapter adapter;
+    private SparseArray<YouTubePlayer> youTubePlayerArray = new SparseArray<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -88,7 +90,33 @@ public class NotificationsFragment extends Fragment {
         AddButton();
         recyclerView();
         ItemClickVideo();
+        addScrollListener();
         return view;
+    }
+
+    private void addScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+
+                // Қўринишда бўлган видеоларни текшириш ва бошқариш
+                for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
+                    YouTubePlayer youTubePlayer = youTubePlayerArray.get(i);
+                    if (youTubePlayer != null) {
+                        if (i == firstVisibleItemPosition) {
+                            youTubePlayer.play(); // Биринчи видеони автоматик ўйнаш
+                        } else {
+                            youTubePlayer.pause(); // Бошқаларни тўхтатиш
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void recyclerView() {
@@ -178,7 +206,7 @@ public class NotificationsFragment extends Fragment {
                     IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
                     youTubePlayerView.initialize(listener, options);
                 }
-
+                youTubePlayerView.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), "Видео2 " + getVieoId, Toast.LENGTH_SHORT).show();
             }
         });
