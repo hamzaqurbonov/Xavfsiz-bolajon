@@ -47,24 +47,24 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         holder.getVieoId.setText(viewModel.getVieoId());
         holder.getVideoName.setText(viewModel.getVideoName());
 
-        holder.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer)  {
-
-
-                youTubePlayer.cueVideo(viewModel.getVieoId(), 0);
-//                Log.d("demo20", String.valueOf(1));
+//        holder.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            @Override
+//            public void onReady(@NonNull YouTubePlayer youTubePlayer)  {
 //
-            }
-
-        });
+//
+//                youTubePlayer.cueVideo(viewModel.getVieoId(), 0);
+////                Log.d("demo20", String.valueOf(1));
+////
+//            }
+//
+//        });
 
         if (!holder.isPlayerInitialized) {
-            holder.youTubePlayerView.initialize(new AbstractYouTubePlayerListener() {
+            holder.youTubePlayer_item.initialize(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                     // Videoni cueVideo yordamida tayyorlab qo'yamiz, avtomatik o'ynatmaslik uchun
-                    youTubePlayer.loadVideo(viewModel.getVieoId(), 0);
+                    youTubePlayer.cueVideo(viewModel.getVieoId(), 0);
                     youTubePlayerArray.put(position, youTubePlayer);
                 }
             }, true, new IFramePlayerOptions.Builder().controls(0).build());
@@ -81,6 +81,18 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                     listener.onItemClick(v, position);
                 }
             }
+        });
+
+
+        holder.deleteSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dbFavorite.deleteSelect(Integer.toString(viewModel.getId()));
+
+                Toast.makeText(v.getContext(), "Text deleted!", Toast.LENGTH_SHORT).show();
+                Refresh(dbFavorite.readCourses());
+            }
+
         });
 
     }
@@ -102,7 +114,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView getVideoName, getVieoId ;
         ImageView deleteSelect;
-        YouTubePlayerView youTubePlayerView;
+        YouTubePlayerView youTubePlayer_item;
         boolean isPlayerInitialized = false;
 
         public ViewHolder(@NonNull View itemView) {
@@ -110,9 +122,9 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             getVideoName = itemView.findViewById(R.id.textLikeIdTraslate);
             getVieoId = itemView.findViewById(R.id.textLikeIdWord);
             deleteSelect = itemView.findViewById(R.id.delete_select);
-            youTubePlayerView = itemView.findViewById(R.id.youtube_player);
+            youTubePlayer_item = itemView.findViewById(R.id.youtube_player);
 
-            ((FragmentActivity) itemView.getContext()).getLifecycle().addObserver(youTubePlayerView);
+            ((FragmentActivity) itemView.getContext()).getLifecycle().addObserver(youTubePlayer_item);
         }
     }
 
