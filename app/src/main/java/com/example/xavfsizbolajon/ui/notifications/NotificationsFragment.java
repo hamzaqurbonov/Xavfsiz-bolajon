@@ -60,7 +60,6 @@ import java.util.Map;
 public class NotificationsFragment extends Fragment {
 
 
-
     EditText edit_short_id;
     Button add_button;
     String DocName, youngNumber, videoId, url;
@@ -214,7 +213,6 @@ public class NotificationsFragment extends Fragment {
 }
 
 
-
 //                youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //
 //                    @SuppressLint("ClickableViewAccessibility")
@@ -232,9 +230,6 @@ public class NotificationsFragment extends Fragment {
 
 
 //                Toast.makeText(getActivity(), "Видео2 " + getVieoId , Toast.LENGTH_SHORT).show();
-
-
-
 
 
 //    @Override
