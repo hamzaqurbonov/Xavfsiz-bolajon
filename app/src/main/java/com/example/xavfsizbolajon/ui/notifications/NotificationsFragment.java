@@ -73,6 +73,8 @@ public class NotificationsFragment extends Fragment {
     FragmentNotificationsBinding binding;
 
     NotificationsAdapter adapter;
+
+    ImageView add_plus;
     private SparseArray<YouTubePlayer> youTubePlayerArray = new SparseArray<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,15 +85,122 @@ public class NotificationsFragment extends Fragment {
         add_button = view.findViewById(R.id.add_button);
         edit_short_id = view.findViewById(R.id.edit_short_id);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
+        add_plus = view.findViewById(R.id.add_plus);
         getLifecycle().addObserver(youTubePlayerView);
 
 
-        AddButton();
+//        AddButton();
         recyclerView();
         ItemClickVideo();
         addScrollListener();
+        addPlus();
         return view;
     }
+    private void addPlus(){
+        add_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("demo50", "onClick: ");
+//                MainFragmentModel model = modalArrayList.get(position);
+//                String getWord = model.getWord();
+//                String getTranslate = model.getTranslate();
+//
+//                dbHistory.addNewCourse(getWord, getTranslate);
+
+
+
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                View dialogView = inflater.inflate(R.layout.add_plus, null);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setView(dialogView);
+
+                TextView titleTextView = dialogView.findViewById(R.id.textViewTitle);
+                TextView messageTextView = dialogView.findViewById(R.id.textViewMessage);
+                ImageView positiveButton = dialogView.findViewById(R.id.positiveButton);
+                ImageView negativeButton = dialogView.findViewById(R.id.negativeButton);
+                ImageView neutralButton = dialogView.findViewById(R.id.neutralButton);
+
+                titleTextView.setText("getWord");
+                messageTextView.setText("getTranslate");
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        // Киритилаётган Видео линки
+                        url = edit_short_id.getText().toString();
+
+                        // Линкни аниқлаш олиш учун
+                        String url_app_longV = "https://youtu.be/";
+                        String url_app_shorts = "https://youtube.com/shorts/";
+                        String url_pk_longV = "https://www.youtube.com/watch?v=";
+                        String url_pk_shorts = "https://www.youtube.com/shorts/";
+
+                        // Линкни филтирлаш учун
+                        if (url.startsWith(url_app_longV)) {
+                            videoId = url.substring(url.indexOf("/youtu.be/") + 10, url.indexOf("?"));
+                        } else if (url.startsWith(url_app_shorts)) {
+                            videoId = url.substring(url.indexOf("/shorts/") + 8, url.indexOf("?"));
+                        } else if (url.startsWith(url_pk_longV)) {
+
+                            videoId = url.substring(url.indexOf("v=") + 2, url.indexOf("&") == -1 ? url.length() : url.indexOf("&"));
+                            if (url.length() == url.indexOf("v=") + 2 + videoId.length()) {
+                                // IDдан кейин бошқа белгилар йўқ
+                                videoId = url.substring(url.indexOf("v=") + 2);
+                            } else {
+                                // IDдан кейин белгилар мавжуд
+                                videoId = url.substring(url.indexOf("v=") + 2, url.indexOf("&"));
+                            }
+                        } else if (url.startsWith(url_pk_shorts)) {
+                            videoId = url.substring(url.lastIndexOf("/") + 1);
+                        } else {
+                            Toast.makeText(getActivity(), "Youtube linkini to'lliq kiriting!", Toast.LENGTH_SHORT).show();
+                            return; // Функцияни тугатади
+                        }
+
+                        dbFavorite.addNewCourse(videoId, edit_short_id.getText().toString());
+                        recyclerView();
+                        edit_short_id.setText("");
+
+
+
+//
+                        dialog.dismiss();
+                        Toast.makeText(getActivity(), "Видео сақланди " + DocName, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "Text is saved!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                negativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                Window window = dialog.getWindow();
+                if (window != null) {
+                    WindowManager.LayoutParams layoutParams = window.getAttributes();
+//                    layoutParams.gravity = Gravity.BOTTOM;  // Экраннинг пастки қисмига жойлаштириш
+//                    layoutParams.gravity = Gravity.TOP; // Экраннинг юқори қисмига жойлаштириш
+//                    layoutParams.y = 100;  // Пикселларда пастдан юқори ёки тепадан пастга суриш
+//                    dialog.getWindow().setLayout(1000, 1000);  // dialog Ҳажмини катта қилиш
+                    window.setAttributes(layoutParams);
+                }
+
+
+
+
+
+            }
+        });
+    }
+
 
     private void addScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

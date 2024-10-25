@@ -16,7 +16,7 @@
         app:enableAutomaticInitialization="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_name_input"
@@ -33,12 +33,12 @@
         app:layout_constraintTop_toBottomOf="@+id/youtube_player_view">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_short_id"
+            android:id="@+id/edit_short_id2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
+            android:hint="Youtube linkini to'lliq kiriting!"
             android:textSize="14dp"
-            android:hint="Youtube linkini to'lliq kiriting!" />
+            android:textStyle="italic" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -50,6 +50,18 @@
         android:text="Қўшиш"
         android:textColor="@color/teal_700"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/youtube_player_view" />
+
+    <ImageView
+        android:id="@+id/add_plus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/add_2_24px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/edit_name_input"
         app:layout_constraintTop_toBottomOf="@+id/youtube_player_view" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -59,8 +71,12 @@
         android:fadeScrollbars="true"
         android:scrollbarThumbVertical="@drawable/square_24px"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_name_input"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

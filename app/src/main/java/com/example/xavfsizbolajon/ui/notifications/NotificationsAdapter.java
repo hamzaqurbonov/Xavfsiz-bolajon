@@ -44,8 +44,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotificationsViewModel viewModel  = modalArrayList.get(position);
-        holder.getVieoId.setText(viewModel.getVieoId());
-        holder.getVideoName.setText(viewModel.getVideoName());
+//        holder.getVieoId.setText(viewModel.getVieoId());
+//        holder.getVideoName.setText(viewModel.getVideoName());
 
 //        holder.youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override
@@ -119,8 +119,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            getVideoName = itemView.findViewById(R.id.textLikeIdTraslate);
-            getVieoId = itemView.findViewById(R.id.textLikeIdWord);
+//            getVideoName = itemView.findViewById(R.id.textLikeIdTraslate);
+//            getVieoId = itemView.findViewById(R.id.textLikeIdWord);
             deleteSelect = itemView.findViewById(R.id.delete_select);
             youTubePlayer_item = itemView.findViewById(R.id.youtube_player);
 
